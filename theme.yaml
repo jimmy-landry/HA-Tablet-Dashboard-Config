@@ -1,14 +1,5 @@
 ---
 Wall-Tablet-Theme:
-  primary-font-family: 'Quicksand'
-  paper-font-common-base_-_font-family: "var(--primary-font-family)"
-  paper-font-common-code_-_font-family: "var(--primary-font-family)"
-  paper-font-body1_-_font-family: "var(--primary-font-family)"
-  paper-font-subhead_-_font-family: "var(--primary-font-family)"
-  paper-font-headline_-_font-family: "var(--primary-font-family)"
-  paper-font-caption_-_font-family: "var(--primary-font-family)"
-  paper-font-title_-_font-family: "var(--primary-font-family)"
-  ha-card-header-font-family: "var(--primary-font-family)"  
   # Journal
   state-icon-color: "rgb(var(--color-theme))"
   border-radius: "20px"
