@@ -23,6 +23,8 @@ _All these are available in HACS._
 
 [simple-weather-card](https://github.com/kalkih/simple-weather-card)
 
+[card-mod 3](https://github.com/thomasloven/lovelace-card-mod)
+
 ------------------------------------
 
 **Credit where credit is due:**
