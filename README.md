@@ -34,4 +34,22 @@ I'm sure there's probably code in there I don't need, as the actual card config 
 
 It's not necessary, but I recommend enabling the theme.yaml file on your tablet, as I designed this dashboard with that theme in mind. It's a smattering of stock HA, UI-Lovelace-Minimalist, and matt8707's theme, so it's a total mess too, but should work just fine.
 
+## Removing the box-shadow element for the sidebar
+
+Sometimes a shadow will appear under the cards in the sidebar despite them being positioned inside a card that's supposed to remove them. Here's an example from my mobile dashboard:
+
+<img width="766" alt="Screenshot 2024-03-05 at 7 25 04 PM" src="https://github.com/jimmy-landry/HA-Tablet-Dashboard-Config/assets/121106900/5f0879f6-79d5-4b21-8cba-3727b7f5626c">
+
+I have no idea what causes this. If you're seeing something along these lines, don't worry, you can use card-mod to remove the shadow manually. Put this code below the card config (you may have to click show code editor first):
+
+```
+card_mod:
+  style: |
+    ha-card {
+      box-shadow: none
+    }
+```
+
+--------------------------------
+
 Don't forget to star my repo if you like this dashboard! 😁
