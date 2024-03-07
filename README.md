@@ -34,6 +34,17 @@ I'm sure there's probably code in there I don't need, as the actual card config 
 
 It's not necessary, but I recommend enabling the theme.yaml file on your tablet, as I designed this dashboard with that theme in mind. It's a smattering of stock HA, UI-Lovelace-Minimalist, and matt8707's theme, so it's a total mess too, but should work just fine.
 
+## Enabling the themes folder
+
+If you don't have them already, add the following lines to your configuration.yaml to enable the themes folder:
+
+```
+frontend:
+  themes: !include_dir_merge_named themes
+```
+
+This ensures that Home Assistant knows where to find your custom themes.
+
 ## Removing the box-shadow element for the sidebar
 
 Sometimes a shadow will appear under the cards in the sidebar despite them being positioned inside a card that's supposed to remove them. Here's an example from my mobile dashboard:
@@ -50,6 +61,69 @@ card_mod:
     }
 ```
 
+## Date and time template sensors
+
+As mentioned in the video, I use some custom template sensors to return the day of the week and 12 hour time for usage at the top of the sidebar. To get these working on your instance, add the following code to your configuration.yaml:
+
+```
+sensor:
+  - platform: template
+    sensors:
+```
+
+### Then add any of the below sensors within the "sensors" key:
+
+**12 hour time sensor:**
+```
+timenew:
+  friendly_name: "XTime"
+  value_template: >
+    {% set time = states('sensor.time') %}
+    {% set hour = time[:2]|int %}
+    {% set timenew = '{:2d}:{}'.format(hour if hour == 12 else hour % 12, time[3:5]) %}
+    {% set hournew = timenew[:2]|int %}
+    {% set hournew2 = (hournew + 12 if hournew == 0 else hournew) %}
+    {{ '{:2d}:{} {}'.format(hournew2 if hournew2 == 12 else hournew % 12, timenew[3:5], 'PM' if hour>11 else 'AM') }}
+```
+
+**Day of the week sensor:**
+
+```
+weekday:
+  friendly_name: Weekday
+  value_template: >
+    {% set weekday = now().weekday() %} 
+    {% if (weekday == 0) %} Monday 
+    {% elif (weekday == 1) %} Tuesday 
+    {% elif (weekday == 2) %} Wednesday
+    {% elif (weekday == 3) %} Thursday 
+    {% elif (weekday == 4) %} Friday
+    {% elif (weekday == 5) %} Saturday 
+    {% elif (weekday == 6) %} Sunday
+    {% endif %}
+```
+
+**Month of the year sensor:**
+
+```
+month:
+  friendly_name: Month
+  value_template: >
+    {% set weekday = now().month %} 
+    {% if (weekday == 1) %} January 
+    {% elif (weekday == 2) %} February 
+    {% elif (weekday == 3) %} March 
+    {% elif (weekday == 4) %} April  
+    {% elif (weekday == 5) %} May
+    {% elif (weekday == 6) %} June 
+    {% elif (weekday == 7) %} July 
+    {% elif (weekday == 8) %} August 
+    {% elif (weekday == 9) %} September 
+    {% elif (weekday == 10) %} October 
+    {% elif (weekday == 11) %} November 
+    {% elif (weekday == 12) %} December 
+    {% endif %}
+```
 --------------------------------
 
-Don't forget to star my repo if you like this dashboard! 😁
+**Please star this repository if you find it useful! 😀**
