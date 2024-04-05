@@ -2871,7 +2871,7 @@ views:
             content: ' '
           - type: custom:button-card
           - type: custom:simple-weather-card
-            entity: weather.forecast_home
+            entity: # your entity goes here
             name: ' '
         view_layout:
           grid-area: sidebar
@@ -3034,7 +3034,7 @@ views:
           - type: custom:button-card
             template:
               - base
-            entity: fan.unassigned_ceiling_fan
+            entity: # your entity goes here
             name: Ceiling Fan
             icon: phu:ceiling-fan
             size: 80%
@@ -3044,7 +3044,7 @@ views:
               action: more-info
           - type: custom:button-card
             template: base
-            entity: input_number.fan_auto_trigger_temperature
+            entity: # your entity goes here
             name: Fan Trigger
             icon: mdi:thermostat
             size: 80%
@@ -3058,7 +3058,7 @@ views:
                 autoclose: false
                 content:
                   type: custom:mushroom-number-card
-                  entity: input_number.fan_auto_trigger_temperature
+                  entity: # your entity goes here
                   display_mode: buttons
                   icon_color: primary
                 title: Edit Temperature
@@ -3068,7 +3068,7 @@ views:
             template:
               - circle
               - light
-            entity: sensor.bedroom_motion_sensor_temperature
+            entity: # your entity goes heree
             name: Temperature Sensor
             size: 80%
             show_state: true
@@ -3077,7 +3077,7 @@ views:
             template:
               - circle
               - light
-            entity: sensor.bedroom_motion_sensor_illuminance
+            entity: # your entity goes here
             name: Ambient Light
             icon: mdi:brightness-5
             size: 80%
@@ -3093,7 +3093,7 @@ views:
         title: HomePod
         cards:
           - type: custom:mini-media-player
-            entity: media_player.bedroom_homepod
+            entity: # your entity goes here
             artwork: full-cover
             max_volume: '56'
             info: scroll
@@ -3105,7 +3105,7 @@ views:
           - type: custom:button-card
             template:
               - base
-            entity: switch.tp_link_smart_plug_8e87
+            entity: # your entity goes here
             icon_color: green
             name: Bedroom Outlet
             icon: mdi:power-plug
@@ -3119,7 +3119,7 @@ views:
                     - color: rgb(0, 175, 0)
           - type: custom:button-card
             template: base
-            entity: switch.koogeek_p1_6c7bf8_outlet
+            entity: # your entity goes here
             name: Sound Machine
             icon: mdi:power
             size: 80%
@@ -3132,7 +3132,7 @@ views:
                     - color: rgb(0, 175, 0)
           - type: custom:button-card
             template: base
-            entity: switch.tp_link_smart_plug_c07e
+            entity: # your entity goes here
             name: Tablet Charger
             color_type: icon
             color: rgb(255, 128, 199)
@@ -3146,7 +3146,7 @@ views:
                     - color: rgb(0, 175, 0)
           - type: custom:button-card
             template: base
-            entity: switch.tp_link_smart_plug_feea
+            entity: # your entity goes here
             name: Watch Charger
             icon: mdi:lightning-bolt
             size: 80%
@@ -3167,7 +3167,7 @@ views:
           - type: custom:button-card
             template:
               - base
-            entity: alarm_control_panel.alarmo
+            entity: # your entity goes here
             name: Security System
             icon: mdi:shield-lock
             size: 80%
@@ -3177,7 +3177,7 @@ views:
               action: more-info
           - type: custom:button-card
             template: base
-            entity: binary_sensor.bedroom_motion_sensor_motion
+            entity: # your entity goes here
             name: Motion Sensor
             icon: mdi:motion-sensor-off
             state_display: null
@@ -3193,7 +3193,7 @@ views:
                     - color: rgb(0, 175, 0)
           - type: custom:button-card
             template: base
-            entity: binary_sensor.virtual_binary_sensor_2
+            entity: # your entity goes here
             name: Door
             icon: mdi:door
             state_display: null
@@ -3208,7 +3208,7 @@ views:
                     - color: rgb(235, 0, 0)
           - type: custom:button-card
             template: base
-            entity: binary_sensor.virtual_binary_sensor_1
+            entity: # your entity goes here
             name: Window
             icon: mdi:window-closed
             state_display: null
@@ -3225,7 +3225,7 @@ views:
               action: call-service
               service: browser_mod.refresh
               target:
-                entity_id: media_player.wall_panel_agent_new
+                entity_id: media_player.BROWSER_MOD_ENTITY_HERE
         columns: 2
         title: Security
         view_layout:
