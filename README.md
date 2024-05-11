@@ -25,6 +25,8 @@ _All these are available in HACS._
 
 [card-mod 3](https://github.com/thomasloven/lovelace-card-mod)
 
+[Custom Brand Icons](https://github.com/elax46/custom-brand-icons) (optional, used in place of the built in MDI icons for some buttons)
+
 ------------------------------------
 
 **Credit where credit is due:**
