@@ -1,4 +1,11 @@
 # HA-Tablet-Dashboard-Config
+
+>[!NOTE]
+>**Under construction**! <br>
+>Hi everyone! Glad you're still enjoying this dashboard! For the next little while new files will be popping in and out of this repo due to a new video I'm in the process of making. Don't worry about them, you don't need them for the dashboard as it is now. However, if you're curious what they're all about, make sure you [subscribe to my channel](https://youtube.com/@dontuseiftamperevident?sub_confirmation=1) so you don't miss the new videos.
+>
+>Stay tuned! 😄
+
 Wall-mounted tablet dashboard config as seen in my YouTube video (https://www.youtube.com/watch?v=Wr7s_49w9VA)
 
 <img width="1240" alt="Screenshot 2024-02-10 at 8 46 18 AM" src="https://github.com/jimmylandry54/HA-Tablet-Dashboard-Config/assets/121106900/462097c4-b3cf-4529-90f8-1bcfb4f361d4">
