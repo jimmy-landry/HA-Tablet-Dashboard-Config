@@ -1,4 +1,1 @@
-README.md export-ignore
-Welcome.md export-ignore
-"Original Dashboard Guide" export-ignore
-"Frosted Glass Dashboard Guide" export-ignore
+*.md export-ignore
