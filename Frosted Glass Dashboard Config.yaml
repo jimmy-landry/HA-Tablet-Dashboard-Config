@@ -1,0 +1,3039 @@
+button_card_templates:
+  button_toggle_small:
+    variables:
+      name: null
+      label: null
+      icon: null
+      entity: null
+      background: var(--popupBG)
+    icon: '[[[ return variables.icon ]]]'
+    entity: '[[[ return variables.entity ]]]'
+    label: |
+      [[[ return variables.label ]]]    
+    name: |
+      [[[ return variables.name ]]]
+    show_label: true
+    tap_action:
+      action: toggle
+    state:
+      - value: 'off'
+        styles:
+          card:
+            - background: var(--gray800)
+          icon:
+            - color: var(--gray000)
+          img_cell:
+            - background: rgba(var(--highlight_active))
+          name:
+            - color: var(--gray000)
+          label:
+            - color: var(--gray000)
+    styles:
+      card:
+        - height: 66px
+        - border-radius: 75px
+        - padding: 4px 20px 4px 4px
+        - background: '[[[ return variables.background ]]]'
+      grid:
+        - grid-template-columns: 76px 1fr min-content
+        - grid-template-areas: '"i l icon" "i n icon"'
+      icon:
+        - width: 30px
+        - color: var(--gray800)
+      img_cell:
+        - justify-self: start
+        - width: 30px
+        - height: 30px
+        - background: rgba(var(--highlight))
+        - padding: 14px
+        - border-radius: 50%
+      name:
+        - justify-self: start
+        - font-size: 14px
+        - color: var(--gray800)
+        - opacity: 0.7
+        - padding-bottom: 7px
+      label:
+        - justify-self: start
+        - font-size: 16px
+        - padding-top: 4px
+        - font-weight: 500
+        - color: var(--gray800)
+      custom_fields:
+        icon: null
+    custom_fields:
+      icon: |
+        [[[
+         var state = entity.state;
+         if(state == "on")
+          return `<ha-icon
+          icon="mdi:toggle-switch"
+          style="color: var(--green); width:50px; height:40px;">
+          </ha-icon>
+          `;
+         else 
+          return `<ha-icon
+          icon="mdi:toggle-switch-off"
+          style="color: var(--gray000); width:50px; height:40px;">
+          </ha-icon>
+          `;
+        ]]]
+  bubble_card_graph:
+    show_name: false
+    show_state: false
+    show_icon: false
+    custom_fields:
+      title:
+        card:
+          type: custom:bubble-card
+          card_type: button
+          button_type: state
+          entity: '[[[ return entity.entity_id ]]]'
+          name: '[[[ return variables.card_name ]]]'
+          icon: '[[[ return variables.card_icon ]]]'
+          card_layout: normal
+          styles: |-
+            ha-card {
+              --bubble-main-background-color: rgba(255,255,255,0.1) !important;
+            }
+      graph:
+        card:
+          type: custom:mini-graph-card
+          entities:
+            - '[[[ return entity.entity_id ]]]'
+          show:
+            name: false
+            icon: false
+            state: false
+          line_color: '[[[ return variables.graph_color ]]]'
+          card_mod:
+            style: |
+              ha-card {
+                box-shadow: none;
+                background: none;
+                backdrop-filter: none !important
+    styles:
+      grid:
+        - grid-template-areas: |
+            "title"
+            "graph"
+        - grid-template-rows: min-content min-content
+      card:
+        - padding: 0px
+        - border-radius: 25px
+        - box-shadow: none
+        - background: rgba(255,255,255,0.05)
+  loader:
+    custom_fields:
+      loader: |
+        <img src="/local/loader.svg" width="100%">
+    tap_action:
+      loader: |
+        [[[
+          if (entity) {
+              let elt = this.shadowRoot,
+                  loader = (id, style, timeout) => {
+                    elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+                      window.setTimeout(() => {
+                        elt.getElementById('loader').style.display = 'none'
+                      }, 20000))
+                  };
+              loader('circle', 'none', 'initial'),
+              loader('loader', 'initial', 'none');
+          }
+        ]]]
+    styles:
+      custom_fields:
+        loader:
+          - display: none
+          - top: '-6%'
+          - right: '-3.5%'
+          - width: 52%
+          - position: absolute
+          - opacity: 0.5
+          - pointer-events: none
+          - filter: |
+              [[[
+                return variables.state_on
+                    ? 'none'
+                    : 'invert(1)';
+              ]]]
+  tilt:
+    variables:
+      tilt_enable: |
+        [[[
+          // disable on macos app, text appears over popup
+          if (window.navigator.userAgent.includes("Home Assistant")) {
+              return false
+          }
+          // enable on macos browsers
+          else if (window.navigator.userAgent.match(/Macintosh; Intel Mac OS X/i)) {
+              return true;
+          }
+          // default - phones, tablets etc
+          return false;
+        ]]]
+      tilt_options: |
+        [[[
+          let options = {
+              max: 5,
+              scale: 1.06,
+              glare: true,
+              'max-glare': 0.15,
+              perspective: 800,
+              speed: 800,
+              parallax: '25px'
+          }
+          if (this._config.template.includes('conditional_media')) {
+              options.scale = options.scale % parseInt(options.scale) / 2 + parseInt(options.scale);
+              options.perspective = options.perspective * 2;
+              return options;
+          }
+          return options;
+        ]]]
+    custom_fields:
+      tilt: |
+        [[[
+          setTimeout(() => {
+              let elt = this.shadowRoot,
+                  card = elt.getElementById('card'),
+                  tilt = typeof VanillaTilt === 'function';
+
+              if (elt && card && tilt && variables.tilt_enable) {
+                  VanillaTilt.init(card, variables.tilt_options);
+              } else {
+                  setTimeout(() => {
+                      if (elt && card && tilt && variables.tilt_enable) {
+                          VanillaTilt.init(card, variables.tilt_options);
+                      }
+                  }, 1000);
+              }
+          }, 0);
+        ]]]
+  settings:
+    variables:
+      entity_tablet: switch.galaxy_tab_a_screensaver
+      entity_browser_mod: media_player.fkb_tablet
+      translate_unknown: Unknown
+      translate_idle: Idle
+      translate_home: Home
+      translate_not_home: Away
+      translate_available: Available
+      translate_no_updates: No updates available
+      translate_update_available: Update available
+      translate_updates_available: Updates available
+      translate_on: 'On'
+      translate_off: 'Off'
+      translate_cool: Cool
+      translate_fan_only: Fan only
+      translate_playing: Playing
+      translate_paused: Paused
+      translate_standby: Standby
+  extra_styles:
+    extra_styles: |
+      [[[
+        if (entity) {
+            if (entity.entity_id.split('.')[0] === 'light' && variables.state_on) {
+
+                // theme variable and conditions
+                let style = getComputedStyle(document.body),
+                    theme_var = style.getPropertyValue('--button-card-light-color-temp'),
+                    is_hsl = theme_var.startsWith('hsl('),
+                    is_color_temp = entity.attributes.color_mode === 'color_temp';
+
+                if (is_hsl && is_color_temp && entity.attributes.brightness) {
+
+                    // calculate lightness in hsl
+                    let regex_pattern = /(\d+)(?!.*\d)/g,
+                        brightness = entity.attributes.brightness / 2.54,
+                        lightness = parseFloat(theme_var.match(regex_pattern)[0]),
+                        min = lightness - 10,
+                        max = lightness + 10,
+                        calc_lightness = brightness * (max - min) / 100 + min;
+
+                    var light_color = theme_var.replace(regex_pattern, calc_lightness);
+                }
+                else {
+                    var light_color = 'var(--button-card-light-color)';
+                }
+            }
+        }
+        return `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              LIGHT              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          svg {
+            --light-color: ${
+              variables.state_on && entity.attributes.brightness
+                  ? light_color
+                  : variables.state_on && !entity.attributes.brightness
+                      ? 'var(--state-icon-active-color);'
+                      : 'var(--state-icon-color);' }
+          }
+
+          .light-color {
+            fill: var(--light-color);
+            transition: all 0.25s ease-out;
+          }
+
+          /* magnification */
+          :host {
+            --card-portrait: 1.4;
+            --card-phone: 2.271;
+          }
+
+          ${this._config.template.includes('light') ? `
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *          CIRCLE SLIDER          *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            #circle_slider {
+              opacity: 0;
+              appearance: none;
+              transform: rotate(270deg);
+              width: 90%;
+              position: absolute;
+              pointer-events: none;
+              cursor: grab;
+              left: 26%;
+              margin-top: 13%;
+            }
+
+            #circle_slider::-webkit-slider-thumb {
+              pointer-events: initial;
+              appearance: none;
+              width: 3vw;
+              height: 3vw;
+              border-radius: 50%;
+              background: green;
+            }
+
+            #circle_slider::-webkit-slider-runnable-track {
+              background: cornflowerblue;
+            }
+
+            #circle_slider::-moz-range-thumb {
+              pointer-events: initial;
+              appearance: none;
+              width: 3vw;
+              height: 3vw;
+              border-radius: 50%;
+              background: green;
+            }
+
+            #circle_slider::-moz-range-track {
+              background: cornflowerblue;
+              height: 3vw;
+            }
+
+            /* portrait */
+            @media screen and (max-width: 1200px) {
+              #circle_slider::-webkit-slider-thumb {
+                width: 4vw;
+                height: 4vw;
+              }
+
+              #circle_slider::-moz-range-thumb {
+                width: 4vw;
+                height: 4vw;
+              }
+            }
+
+            /* phone */
+            @media screen and (max-width: 800px) {
+              #circle_slider::-webkit-slider-thumb {
+                width: 5.8vw;
+                height: 5.8vw;
+              }
+
+              #circle_slider::-moz-range-thumb {
+                width: 5.8vw;
+                height: 5.8vw;
+              }
+            }
+
+          `:''}
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              BASE               *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          #container {
+            text-align: left !important;
+            z-index: 1;
+          }
+
+          #card {
+            padding: 10.9% 9.9% 8.9% 10.9%;
+          }
+
+          #state::first-letter {
+            text-transform: uppercase;
+          }
+
+          #name, #state {
+            font-size: var(--button-card-font-size);
+            font-weight: var(--button-card-font-weight);
+            letter-spacing: var(--button-card-letter-spacing);
+          }
+
+          /* portrait */
+          @media screen and (max-width: 1200px) {
+            #name, #state {
+              font-size: calc(var(--button-card-font-size) * var(--card-portrait));
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #name, #state {
+              font-size: calc(var(--button-card-font-size) * var(--card-phone));
+            }
+          }
+
+          ${variables.tilt_enable === true ? `
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              TILT               *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+              #name, #state {
+                font-size: calc(var(--button-card-font-size) - var(--z-axis-adjustment));
+              }
+
+              /* portrait */
+              @media screen and (max-width: 1200px) {
+                #name, #state {
+                  font-size: calc(calc(var(--button-card-font-size) * var(--card-portrait)) - var(--z-axis-adjustment));
+                }
+              }
+
+              /* phone */
+              @media screen and (max-width: 800px) {
+                #name, #state {
+                  font-size: calc(calc(var(--button-card-font-size) * var(--card-phone)) - var(--z-axis-adjustment));
+                }
+              }
+
+              #container {
+                transform: translateZ(${variables.tilt_options.parallax});
+              }
+
+              #circle_slider {
+                width: 100%;
+                margin-top: 0;
+              }
+
+              /* adjust circle_slider position for firefox */
+              @supports (-moz-appearance:none) {
+                #circle_slider {
+                  margin-top: 13%;
+                }
+              }
+
+              #card {
+                padding: 12% 11% 10.5% 12%;
+                transform-style: preserve-3d;
+                overflow: visible;
+                /* firefox pixelated edges */
+                outline: 1px solid transparent;
+              }
+
+              #ripple, .js-tilt-glare {
+                clip-path: inset(0 round var(--button-card-border-radius));
+                overflow: hidden;
+              }
+
+              .js-tilt-glare {
+                z-index: 1;
+              }
+
+              .js-tilt-glare-inner {
+                background-color: rgba(0,0,0,0.9);
+              }
+
+          `:''}
+
+          ${this._config.template.includes('conditional_media') ? `
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              MEDIA              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            :host {
+              --blur-intensity: blur(4.5px) brightness(0.8);
+            }
+
+            /* phone */
+            @media screen and (max-width: 800px) {
+              :host {
+                --blur-intensity: blur(2.5px) brightness(0.8);
+              }
+            }
+
+            #ripple, .js-tilt-glare {
+              clip-path: inset(0 round calc(var(--button-card-border-radius) / 2));
+            }
+
+            #container {
+              overflow: hidden;
+            }
+
+            .marquee {
+              animation: marquee 20s linear infinite;
+            }
+
+            @keyframes marquee {
+              from {
+                transform: translateX(0%);
+              }
+              to {
+                transform: translateX(-50%);
+              }
+            }
+
+          `:''}
+
+          ${this._config.template.includes('footer') ? `
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             FOOTER              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            /* magnification */
+            :host {
+              --footer-portrait: 1.4;
+              --footer-phone: 2.8;
+            }
+
+            #ripple, .js-tilt-glare {
+              border-radius: calc(var(--footer-card-border-radius) - 0.1vw);
+              clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
+            }
+
+            #name {
+              font-size: var(--footer-card-font-size);
+              padding: var(--footer-card-padding-v) var(--footer-card-padding-h);
+              letter-spacing: 0.05vw;
+            }
+
+            ha-icon {
+              width: var(--footer-card-icon-size);
+              vertical-align: 7%;
+              padding-right: 0.1vw;
+              opacity: 0.4;
+            }
+
+            #card {
+              border-radius: var(--footer-card-border-radius);
+              background: rgba(115, 115, 115, 0.10);
+            }
+
+            #notify {
+              font-size: var(--footer-notify-font-size);
+              width: var(--footer-notify-box-size);
+              height: var(--footer-notify-box-size);
+              line-height: var(--footer-notify-box-size);
+              padding-right: 0.5%;
+              padding-top: 0.5%;
+              top: var(--footer-notify-top);
+              right: var(--footer-notify-right);
+            }
+
+            /* portrait */
+            @media screen and (max-width: 1200px) {
+              #name {
+                font-size: calc(var(--footer-card-font-size) * var(--footer-portrait));
+                padding: calc(var(--footer-card-padding-v) * var(--footer-portrait)) calc(var(--footer-card-padding-h) * var(--footer-portrait));
+              }
+
+              ha-icon {
+                width: calc(var(--footer-card-icon-size) * var(--footer-portrait));
+              }
+
+              #card {
+                border-radius: calc(var(--footer-card-border-radius) * var(--footer-portrait));
+                margin: 0 0.5vw;
+              }
+
+              #notify {
+                font-size: calc(var(--footer-notify-font-size) * var(--footer-portrait));
+                width: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+                height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+                line-height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+              }
+            }
+
+            /* phone */
+            @media screen and (max-width: 800px) {
+              #name {
+                font-size: calc(var(--footer-card-font-size) * var(--footer-phone));
+                padding: calc(var(--footer-card-padding-v) * var(--footer-phone)) calc(var(--footer-card-padding-h) * var(--footer-phone));
+                letter-spacing: 0.05vw;
+              }
+
+              ha-icon {
+                width: calc(var(--footer-card-icon-size) * var(--footer-phone));
+              }
+
+              #card {
+                border-radius: calc(var(--footer-card-border-radius) * var(--footer-phone));
+                background: rgba(115, 115, 115, 0.12);
+                margin: 0 0.5vw;
+              }
+
+              #notify {
+                font-size: calc(var(--footer-notify-font-size) * var(--footer-phone));
+                width: calc(var(--footer-notify-box-size) * var(--footer-phone));
+                height: calc(var(--footer-notify-box-size) * var(--footer-phone));
+                line-height: calc(var(--footer-notify-box-size) * var(--footer-phone) + 1px);
+                top: calc(var(--footer-notify-top) * var(--footer-phone));
+                right: calc(var(--footer-notify-right) * var(--footer-phone) + 2%);
+                padding: 0;
+              }
+            }
+
+          `:''}
+        `;
+      ]]]
+  card_light:
+    show_state: true
+    state_display: null
+    size: 40%
+    styles:
+      card:
+        - width: 120px
+        - height: 120px
+      grid:
+        - grid-template-areas: '"i" "n" "s"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content
+      icon:
+        - color: var(--button-card-light-color)
+      img_cell:
+        - align-self: start
+        - text-align: start
+        - color: var(--button-card-light-color)
+      name:
+        - color: var(--button-card-light-color)
+        - justify-self: start
+        - padding-left: 10px
+        - font-weight: bold
+        - font-size: 11pt
+      state:
+        - justify-self: start
+        - padding-left: 10px
+        - text-transform: capitalize
+        - font-size: 11pt
+        - color: var(--button-card-light-color)
+    state:
+      - value: 'off'
+        styles:
+          card:
+            - filter: opacity(70%)
+          icon:
+            - filter: grayscale(100%)
+    hold_action:
+      action: more-info
+  light:
+    template:
+      - base
+      - circle
+      - loader
+    double_tap_action:
+      action: more-info
+    variables:
+      circle_input: |
+        [[[
+          if (entity) {
+              // if light group get brightness from child to remove bounce
+              let child = entity.attributes.entity_id,
+                  brightness = child && states[child[0]].attributes.brightness
+                      ? Math.round(states[child[0]].attributes.brightness / 2.54)
+                      : Math.round(entity.attributes.brightness / 2.54);
+              return brightness === 0 && entity.state !== 'off'
+                  ? 1
+                  : brightness
+          }
+        ]]]
+      circle_input_unit: '%'
+  base:
+    template:
+      - settings
+      - tilt
+      - extra_styles
+    variables:
+      state_on: >
+        [[[ return ['on', 'home', 'cool', 'heat', 'fan_only', 'playing',
+        'unlocked', 'armed_home', 'armed_away', 'armed_night',
+        'open'].indexOf(!entity || entity.state) !== -1; ]]]
+      state: |
+        [[[ return !entity || entity.state; ]]]
+      entity_id: |
+        [[[ return !entity || entity.entity_id; ]]]
+      entity_picture: |
+        [[[ return !entity || entity.attributes.entity_picture; ]]]
+      timeout: |
+        [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+      is_youtube: |
+        [[[
+          let is_youtube = entity?.attributes?.app_id === 'com.google.ios.youtube',
+              sensor = this?._config?.triggers_update,
+              media_title = entity?.attributes?.media_title,
+              watching_title = states[sensor]?.attributes?.title;
+          if (is_youtube && media_title === watching_title) {
+              return true;
+          }
+        ]]]
+    aspect_ratio: 1/1
+    show_state: true
+    show_icon: true
+    state_display: |
+      [[[
+        const stateDict = {
+          'on': variables.translate_on,
+          'off': variables.translate_off,
+          'cool': variables.translate_cool,
+          'fan_only': variables.translate_fan_only,
+        };
+        if (variables.state === true) return variables.translate_unknown;
+        return stateDict[variables.state];
+      ]]]
+    tap_action:
+      ui_sound_tablet: |
+        [[[
+          let screensaver = states[variables.entity_tablet] === undefined ||
+              states[variables.entity_tablet].state;
+
+          if (variables.state === 'off' && screensaver === 'off') {
+              hass.callService('media_player', 'play_media', {
+                  entity_id: variables.entity_browser_mod,
+                  media_content_id: '/local/sound/on.m4a',
+                  media_content_type: 'music'
+              });
+          }
+          if (variables.state_on && screensaver === 'off') {
+              hass.callService('media_player', 'play_media', {
+                  entity_id: variables.entity_browser_mod,
+                  media_content_id: '/local/sound/off.m4a',
+                  media_content_type: 'music'
+              });
+          }
+        ]]]
+      card_bounce: |
+        [[[
+                // add animation
+                if (this.getElementsByTagName("style").length === 0) {
+
+                    // phone condition
+                    let mq = window.matchMedia('(max-width: 800px)').matches;
+
+                    let style = document.createElement('style');
+
+                    style.innerHTML = `
+                        @keyframes card_bounce {
+                            0%   { transform: scale(1); }
+                            10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                            25%  { transform: scale(1); }
+                            30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                            100% { transform: scale(1); }
+                        }
+                    `;
+
+                    this.appendChild(style);
+                }
+
+                // duration
+                let duration = 800;
+
+                // animate
+                this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+
+                // reset
+                window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+              ]]]
+      action: toggle
+    hold_action:
+      action: block
+    state:
+      - value: unavailable
+        styles:
+          card:
+            - opacity: 45%
+        tap_action:
+          action: none
+      - value: 'off'
+        styles:
+          icon:
+            - color: rgb(215,215,215)
+      - value: closed
+        styles:
+          icon:
+            - color: rgb(215,215,215)
+      - value: paused
+        styles:
+          icon:
+            - color: rgb(215,215,215)
+    styles:
+      grid:
+        - grid-template-areas: |
+            "i  circle"
+            "n     n"
+            "s     s"
+        - grid-template-columns: repeat(2, 1fr)
+        - grid-template-rows: auto repeat(2, min-content)
+        - gap: 1.3%
+        - align-items: start
+        - will-change: transform
+      name:
+        - justify-self: start
+        - line-height: 121%
+        - font-weight: 700
+      state:
+        - justify-self: start
+        - line-height: 115%
+      icon:
+        - color: var(--button-card-light-color)
+        - icon_size: 600px
+        - padding: 0px 0px
+        - margin-top: '-45%'
+        - margin-left: '-28%'
+      card:
+        - border-radius: 22px
+        - border-width: 0
+        - '-webkit-tap-highlight-color': rgba(0,0,0,0)
+        - transition: none
+        - '--mdc-ripple-color': |
+            [[[
+              return variables.state_on
+                  ? 'rgb(0, 0, 0)'
+                  : '#97989c';
+            ]]]
+        - color: |
+            [[[
+              return variables.state_on
+                  ? '#4b5254'
+                  : '#97989c';
+            ]]]
+        - background-color: |
+            [[[
+              return variables.state_on
+                  ? 'rgba(255, 255, 255, 0.85)'
+                  : 'var(--tile-background-color)';
+            ]]]
+  circle:
+    styles:
+      card:
+        - '--c-stroke-color-on': '#b0b0b0'
+        - '--c-stroke-color-off': none
+        - '--c-fill-color-on': none
+        - '--c-fill-color-off': rgba(255,255,255,0.04)
+        - '--c-stroke-width': 2.3
+        - '--c-stroke-width-dragging': 4
+        - '--c-font-color': '#97989c'
+        - '--c-font-size': 14px
+        - '--c-unit-font-size': 10.5px
+        - '--c-font-weight': 700
+        - '--c-letter-spacing': '-0.02rem'
+      custom_fields:
+        circle:
+          - display: initial
+          - width: 88%
+          - margin: '-3% 2% 0 0'
+          - justify-self: end
+          - opacity: 1
+    custom_fields:
+      circle: |
+        [[[
+          if (entity) {
+              let r = 22.1,
+                  c = r * 2 * Math.PI,
+                  tspan = '<tspan dx=".2" dy="-.4">',
+                  domain = entity.entity_id.split('.')[0],
+                  state = variables.state_on,
+                  input = variables.circle_input || ' ',
+                  unit = variables.circle_input_unit || ' ';
+
+             /* * * * * * * * * * * * * * * * * *
+              *                                 *
+              *             CIRCLE              *
+              *                                 *
+              * * * * * * * * * * * * * * * * * */
+
+              let circle = (state, input, unit) => {
+                  return `
+                    <svg viewBox="0 0 50 50">
+                      <style>
+                        circle {
+                          transform: rotate(-90deg);
+                          transform-origin: 50% 50%;
+                          stroke-dasharray: ${c};
+                          stroke-dashoffset: ${typeof input === 'number' && c - input / 100 * c};
+                          stroke-width: var(--c-stroke-width);
+                          stroke: ${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'};
+                          fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                        }
+                        text {
+                          font-size: var(--c-font-size);
+                          font-weight: var(--c-font-weight);
+                          letter-spacing: var(--c-letter-spacing);
+                          fill: var(--c-font-color);
+                        }
+                        tspan {
+                          font-size: var(--c-unit-font-size);
+                        }
+                        #circle_value, tspan {
+                          text-anchor: middle;
+                          dominant-baseline: central;
+                        }
+                      </style>
+                      <circle id="circle_stroke" cx="25" cy="25" r="${r}"/>
+                      <text id="circle_value" x="50%" y="52%">${input}${tspan}${unit}</tspan></text>
+                    </svg>
+
+                    ${domain === 'light' && `
+                        <input id="circle_slider" type="range" min="0" max="100" value="${input}">
+                    `}
+                  `;
+              }
+
+             /* * * * * * * * * * * * * * * * * *
+              *                                 *
+              *              LIGHT              *
+              *                                 *
+              * * * * * * * * * * * * * * * * * */
+
+              if (domain === 'light' && state) {
+
+                  // wait 0ms for shadow dom
+                  setTimeout(() => {
+
+                      // then get elements
+                      let elt = this.shadowRoot,
+                          circle_slider = elt.getElementById('circle_slider'),
+                          circle_value = elt.getElementById('circle_value'),
+                          circle_stroke = elt.getElementById('circle_stroke');
+
+                      // approximate position of thumb relative to circle
+                      circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+
+                      // debug position
+                      let debug = false;
+                      if (debug) circle_slider.style.opacity = 0.3;
+
+                      // pass each event to handler
+                      ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                          circle_slider.addEventListener(event, handler, { passive: true })
+                      });
+
+                      function handler(event) {
+
+                          // "this" refers to slider
+                          if (event.target === this) {
+
+                              // bypass button-card tap_action
+                              event.stopPropagation();
+
+                              // update circle_value
+                              circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+
+                              // update stroke
+                              circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                              circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+                              
+                              // set cursor while dragging
+                              if (event.type === 'mousedown' || event.type === 'input') {
+                                  this.style.cursor = 'grabbing';
+                              } else {
+                                  this.style.cursor = 'grab';
+                              }
+
+                              // reset stroke width if value doesn't change
+                              if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                  circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+
+                              // on release
+                              if (event.type === 'mouseup' || event.type === 'touchend') {
+
+                                  // display loader if brightness is 0
+                                  if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                      elt.getElementById('loader').style.display = 'initial';
+                                      elt.getElementById('circle').style.display = 'none';
+                                  }
+
+                                  // set brightness
+                                  hass.callService('light', 'turn_on', {
+                                      entity_id: entity.entity_id,
+                                      brightness_pct: this.value
+                                  });
+                              }
+                          }
+                      }
+                  }, 0);
+
+                  return circle(state, input, unit);
+              }
+
+             /* * * * * * * * * * * * * * * * * *
+              *                                 *
+              *             PERSON              *
+              *                                 *
+              * * * * * * * * * * * * * * * * * */
+
+              else if (domain === 'person') {
+                  let time = c => {
+                      let s = (c/1e3),
+                          m = (c/6e4),
+                          h = (c/36e5),
+                          d = (c/864e5);
+                      return s < 60
+                          ? parseInt(s) + 's'
+                          : m < 60 ? parseInt(m) + 'm'
+                          : h < 24 ? parseInt(h) + 'h'
+                          : parseInt(d) + 'd';
+                  };
+                  let input = states[variables.retain] === undefined || states[variables.retain].state === 'unavailable'
+                          ? time(Date.now() - Date.parse(entity.last_changed))
+                          : time(Date.now() - Date.parse(states[variables.retain].state)),
+                      unit = ' ';
+                  return circle(state, input, unit);
+              }
+
+             /* * * * * * * * * * * * * * * * * *
+              *                                 *
+              *             CLIMATE             *
+              *                                 *
+              * * * * * * * * * * * * * * * * * */
+
+              else if (domain === 'fan') {
+                  return circle(state, input, unit);
+              }
+
+             /* * * * * * * * * * * * * * * * * *
+              *                                 *
+              *              COVER              *
+              *                                 *
+              * * * * * * * * * * * * * * * * * */
+
+              else if (domain === 'cover') {
+                  return circle(state, input, unit);
+              }
+              
+             /* * * * * * * * * * * * * * * * * *
+              *                                 *
+              *              OTHER              *
+              *                                 *
+              * * * * * * * * * * * * * * * * * */
+
+              else if (variables.state_on) {
+                  return circle(state, input, unit);
+              }
+          }
+        ]]]
+  footer:
+    template:
+      - settings
+      - tilt
+      - extra_styles
+    variables:
+      notify: |
+        [[[
+          return false;
+        ]]]
+      tilt_options: |
+        [[[
+          return {
+            max: 5,
+            scale: 1.1,
+            glare: true,
+            'max-glare': 0.07,
+            perspective: 1000,
+            speed: 800,
+            parallax: '10px'
+          };
+        ]]]
+    size: 2vw
+    show_icon: false
+    color: '#9da0a2'
+    custom_fields:
+      notify: |
+        [[[
+          if (Number.isInteger(variables.notify)) {
+              return variables.notify;
+          } else if (variables.notify) {
+              return `<span style="font-weight: 900;">!</span>`;
+          }
+        ]]]
+    styles:
+      card:
+        - color: '#97989c'
+        - width: fit-content
+        - border: 0.12vw solid rgba(115, 115, 115, 0.2)
+        - transition: none
+        - padding: 0 0 0.05vw 0
+        - overflow: visible
+        - '--mdc-ripple-color': rgba(0, 0, 0, 0.8)
+      custom_fields:
+        notify:
+          - display: |
+              [[[
+                if (Number.isInteger(variables.notify)) {
+                    return variables.notify > 0
+                        ? 'initial'
+                        : 'none';
+                }
+                else if (variables.notify) {
+                    return variables.notify
+                        ? 'initial'
+                        : 'none';
+                }
+              ]]]
+          - position: absolute
+          - font-weight: 700
+          - color: '#d6d6d6'
+          - background: '#8b3333'
+          - border-radius: 50%
+          - text-align: center
+          - text-overflow: unset
+          - z-index: 1
+    tap_action:
+      haptic: medium
+    hold_action:
+      action: block
+    double_tap_action:
+      action: block
+views:
+  - title: Home
+    layout:
+      margin: -2
+      grid-template-columns: 25% 22.5% 22.5% 22.5%
+      grid-column-gap: 18pt
+      grid-row-gap: '-6pt'
+      grid-template-rows: auto
+      grid-template-areas: |
+        "sidebar lights lights climate"
+        "sidebar media outlets security"
+        "sidebar footer footer footer"
+    type: custom:grid-layout
+    cards:
+      - square: true
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.ceiling
+            name: Fan Light
+            icon: mdi:lightbulb
+            size: 75%
+            show_state: true
+            aspect_ratio: 1/1
+            styles:
+              icon:
+                - margin-left: '-20%'
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.lamp_1
+            name: Nightstand
+            icon: mdi:lamp
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+            styles:
+              icon:
+                - margin-left: '-30%'
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.dresser_lamp
+            name: Bookcase
+            icon: mdi:lamp
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+            styles:
+              icon:
+                - margin-left: '-30%'
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.hue_go_1
+            name: Hue Go
+            icon: mdi:light-flood-up
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.h619b_49d2
+            name: Bed LEDs
+            icon: mdi:bed-double
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.rgbic_neon_rope_lights
+            name: Wave Light
+            icon: mdi:sine-wave
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            template:
+              - light
+              - circle
+            entity: light.hanging_filament_light
+            name: Edison Light
+            icon: mdi:lightbulb
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            template:
+              - circle
+              - light
+            entity: light.h612f_0c45
+            name: Closet Light
+            icon: mdi:light-recessed
+            size: 70%
+            show_state: true
+            aspect_ratio: 1/1
+            styles:
+              icon:
+                - margin-left: '-30%'
+        columns: 4
+        title: Lights
+        view_layout:
+          grid-area: lights
+        card_mod:
+          style: |
+            ha-card {
+              grid-card-gap: 1%
+      - type: grid
+        columns: 5
+        square: false
+        cards:
+          - type: custom:button-card
+            layout: icon_name
+            icon: mdi:palette-outline
+            size: 20pt
+            name: Scenes
+            styles:
+              card:
+                - border-radius: 10px
+                - padding: 6px
+                - background-color: rgba(115,115,115,0.25)
+              name:
+                - margin-left: '-26%'
+            tap_action:
+              action: navigate
+              navigation_path: '#scenes'
+          - type: custom:button-card
+            layout: icon_name
+            icon: mdi:arrow-up-circle-outline
+            size: 20pt
+            name: Updates
+            styles:
+              card:
+                - border-radius: 10px
+                - padding: 6px
+                - background-color: rgba(115,115,115,0.25)
+              name:
+                - margin-left: '-26%'
+              custom_fields:
+                notify:
+                  - position: absolute
+                  - left: 10%
+                  - top: 10%
+            tap_action:
+              action: navigate
+              navigation_path: '#updates'
+            custom_fields:
+              notify:
+                card:
+                  type: custom:button-card
+                  aspect_ratio: 1/1
+                  styles:
+                    card:
+                      - border-radius: 100%
+                      - background: rgb(183,54,66)
+          - type: custom:button-card
+            layout: icon_name
+            icon: mdi:webcam
+            size: 16.5pt
+            name: Camera
+            styles:
+              card:
+                - border-radius: 10px
+                - padding: 6px
+                - background-color: rgba(115,115,115,0.25)
+              name:
+                - margin-left: '-26%'
+            tap_action:
+              action: navigate
+              navigation_path: '#cameras'
+          - type: custom:button-card
+            layout: icon_name
+            icon: mdi:tablet
+            size: 20pt
+            name: Tablet
+            styles:
+              card:
+                - border-radius: 10px
+                - padding: 6px
+                - background-color: rgba(115,115,115,0.25)
+              name:
+                - margin-left: '-26%'
+            tap_action:
+              action: navigate
+              navigation_path: '#tablet'
+          - type: custom:button-card
+            layout: icon_name
+            icon: mdi:server
+            size: 20pt
+            name: System
+            styles:
+              card:
+                - border-radius: 10px
+                - padding: 6px
+                - background-color: rgba(115,115,115,0.25)
+                - height: 38px
+              name:
+                - margin-left: '-26%'
+            tap_action:
+              action: navigate
+              navigation_path: '#system'
+        view_layout:
+          grid-area: footer
+      - type: grid
+        columns: 1
+        square: false
+        title: Devices
+        cards:
+          - type: custom:swipe-card
+            parameters:
+              speed: 550
+              spaceBetween: 40
+              threshold: 5
+              effect: coverflow
+            cards:
+              - square: true
+                type: grid
+                cards:
+                  - type: custom:button-card
+                    template:
+                      - base
+                    entity: fan.unassigned_ceiling_fan
+                    name: Ceiling Fan
+                    icon: mdi:ceiling-fan
+                    state:
+                      - value: 'on'
+                        styles:
+                          icon:
+                            - color: rgb(100,178,237)
+                    state_display: |
+                      [[[
+                        if (entity.state == 'on') {
+                          return entity.attributes.percentage + '% Speed' 
+                        } else {
+                          return 'Off'
+                        }
+                      ]]] 
+                    size: 75%
+                    styles:
+                      icon:
+                        - margin-left: '-24%'
+                    show_state: true
+                    show_icon: true
+                    aspect_ratio: 1/1
+                    double_tap_action:
+                      action: more-info
+                  - type: custom:button-card
+                    template: base
+                    entity: switch.koogeek_p1_9109af_outlet
+                    name: String Lights
+                    icon: mdi:string-lights
+                    size: 80%
+                    show_state: true
+                    aspect_ratio: 1/1
+                  - type: custom:button-card
+                    template:
+                      - base
+                      - loader
+                    entity: cover.curtain_6f
+                    name: Main Curtain
+                    icon: mdi:curtains-closed
+                    size: 80%
+                    show_state: true
+                    aspect_ratio: 1/1
+                    styles:
+                      icon:
+                        - margin-left: '-18%'
+                    state:
+                      - value: open
+                        icon: mdi:curtains
+                        styles:
+                          icon:
+                            - color: rgb(147,206,246)
+                      - value: closing
+                        icon: mdi:curtains-closed
+                        styles:
+                          icon:
+                            - animation: blink 2s ease infinite
+                            - color: rgba(255,255,255,0.2)
+                      - value: opening
+                        icon: mdi:curtains-open
+                        styles:
+                          icon:
+                            - animation: blink 2s ease infinite
+                            - color: rgba(255,255,255,0.2)
+                  - type: custom:button-card
+                    template:
+                      - base
+                      - loader
+                    entity: cover.curtain_61
+                    name: Side Curtain
+                    icon: mdi:curtains-closed
+                    size: 80%
+                    show_state: true
+                    aspect_ratio: 1/1
+                    styles:
+                      icon:
+                        - margin-left: '-18%'
+                    state:
+                      - value: open
+                        icon: mdi:curtains
+                        styles:
+                          icon:
+                            - color: rgb(147,206,246)
+                      - value: closing
+                        icon: mdi:curtains-closed
+                        styles:
+                          icon:
+                            - animation: blink 2s ease infinite
+                            - color: rgba(255,255,255,0.2)
+                      - value: opening
+                        icon: mdi:curtains
+                        styles:
+                          icon:
+                            - animation: blink 2s ease infinite
+                            - color: rgba(255,255,255,0.2)
+                columns: 2
+              - square: true
+                type: grid
+                cards:
+                  - type: custom:button-card
+                    template: base
+                    entity: switch.air_freshener
+                    icon: mdi:air-purifier
+                    size: 70%
+                    show_state: true
+                    aspect_ratio: 1/1
+                    state:
+                      - value: 'on'
+                        styles:
+                          icon:
+                            - color: rgb(113,188,235)
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "i  circle"
+                            "n     n"
+                            "s     s"
+                      icon:
+                        - margin-left: '-40%'
+                  - type: custom:button-card
+                    template:
+                      - base
+                      - loader
+                    entity: light.night_light
+                    icon_color: yellow
+                    name: Night Light
+                    icon: mdi:lightbulb-night
+                    size: 80%
+                    show_state: true
+                    aspect_ratio: 1/1
+                    state:
+                      - value: 'on'
+                        styles:
+                          icon:
+                            - color: rgb(245,189,18)
+                  - type: custom:button-card
+                    template: base
+                    entity: switch.koogeek_p1_6c7bf8_outlet
+                    name: Sound Machine
+                    show_icon: true
+                    icon: mdi:power
+                    size: 80%
+                    show_state: true
+                    aspect_ratio: 1/1
+                    state:
+                      - value: 'on'
+                        styles:
+                          icon:
+                            - color: rgb(0, 175, 0)
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "i  circle"
+                            "n     n"
+                            "s     s"
+                  - type: custom:button-card
+                    template:
+                      - base
+                    entity: switch.tp_link_smart_plug_8e87
+                    show_icon: true
+                    name: Turtle Lamp
+                    icon: mdi:power
+                    size: 80%
+                    show_state: true
+                    aspect_ratio: 1/1
+                    state:
+                      - value: 'on'
+                        styles:
+                          icon:
+                            - color: rgb(0, 175, 0)
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "i  circle"
+                            "n     n"
+                            "s     s"
+                columns: 2
+        view_layout:
+          grid-area: climate
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - square: true
+            type: grid
+            cards:
+              - type: custom:button-card
+                template:
+                  - base
+                entity: binary_sensor.jimmy_s_mac_studio_active
+                name: Mac Studio
+                show_icon: true
+                icon: mdi:monitor
+                size: 80%
+                show_state: true
+                aspect_ratio: 1/1
+                tap_action:
+                  action: more-info
+                state:
+                  - value: 'on'
+                    styles:
+                      icon:
+                        - color: rgb(140,161,248)
+                styles:
+                  grid:
+                    - grid-template-areas: |
+                        "i  circle"
+                        "n     n"
+                        "s     s"
+              - type: custom:button-card
+                template: base
+                entity: switch.koogeek_p1_9109af_outlet_2
+                name: Desk Lamp
+                icon: mdi:desk-lamp
+                size: 70%
+                show_state: true
+                aspect_ratio: 1/1
+              - type: custom:button-card
+                template:
+                  - base
+                entity: switch.tp_link_smart_plug_feea
+                icon_color: yellow
+                name: String Lights
+                icon: mdi:string-lights
+                size: 80%
+                show_state: true
+                aspect_ratio: 1/1
+                state:
+                  - value: 'on'
+                    styles:
+                      icon:
+                        - color: rgb(245,189,18)
+              - type: custom:button-card
+                template:
+                  - circle
+                  - light
+                entity: light.lightstrip
+                name: Lightstrip
+                icon: mdi:led-strip-variant
+                size: 80%
+                show_state: true
+                aspect_ratio: 1/1
+            columns: 2
+            view_layout:
+              grid-area: outlets
+        title: Office
+        view_layout:
+          grid-area: outlets
+      - square: true
+        type: grid
+        cards:
+          - type: custom:button-card
+            template:
+              - base
+            entity: script.wake_up_script
+            name: Wake Up
+            icon: mdi:weather-sunset-up
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+            tap_action:
+              action: call-service
+              service: script.wake_up_script
+            confirmation:
+              text: This will execute the script "Wake Up Script."
+            state:
+              - value: 'on'
+                styles:
+                  icon:
+                    - color: rgb(245,207,81)
+                    - animation: blink 3s ease infinite
+          - type: custom:button-card
+            template: base
+            name: Going To Bed
+            icon: mdi:bed-double
+            entity: script.going_to_bed_script
+            state_display: null
+            color_type: icon
+            size: 80%
+            show_state: true
+            aspect_ratio: 1/1
+            tap_action:
+              action: call-service
+              service: script.going_to_bed_script
+            confirmation:
+              text: This will execute the script "Going to Bed Script."
+            state:
+              - value: 'on'
+                styles:
+                  icon:
+                    - color: rgb(162,149,242)
+                    - animation: blink 3s ease infinite
+          - type: custom:button-card
+            template: base
+            entity: scene.i_m_leaving
+            name: All Lights Off
+            icon: mdi:light-switch-off
+            state_display: Tap to run
+            size: 70%
+            show_state: true
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            template: base
+            entity: script.turn_on_lights_edited
+            name: All Lights On
+            icon: mdi:light-switch
+            state_display: Tap to run
+            size: 70%
+            show_state: true
+            aspect_ratio: 1/1
+        columns: 2
+        title: Scripts
+        view_layout:
+          grid-area: security
+      - type: custom:button-card
+        custom_fields:
+          sidebar:
+            card:
+              type: custom:button-card
+              custom_fields:
+                weather:
+                  card:
+                    type: custom:button-card
+                    entity: weather.forecast_home
+                    show_name: false
+                    show_icon: false
+                    custom_fields:
+                      temp: |
+                        [[[
+                          return states['weather.forecast_home'].attributes.temperature + '°'
+                        ]]]
+                      cond: |
+                        [[[
+                          var time = states["weather.forecast_home"].state
+                          let welcome = '';
+                          if (time == 'clear-night'){
+                            welcome = 'Clear';
+                          } else if (time == 'clear'){
+                            welcome = Sunny;
+                          } else if (time == 'partlycloudy'){
+                            welcome = 'Partly Cloudy';
+                          } else {
+                            welcome = states["weather.forecast_home"].state;
+                          }
+                          return welcome;
+                        ]]]
+                      icon: |
+                        [[[
+                          var weather = states["weather.forecast_home"].state
+                          let welcome = '';
+                          if (states['weather.forecast_home'].state == 'partlycloudy' && states['sun.sun'].state == 'below_horizon') {
+                            return '<img src = "/local/weather_icons/partly-cloudy-night.svg" width="75" height="75" />'
+                          } else {
+                            return '<img src = "/local/weather_icons/' + weather + '.svg" width="=75" height="75" />'
+                          }
+                          return welcome;
+                        ]]] 
+                    styles:
+                      grid:
+                        - grid-template-rows: 50% 50%
+                        - grid-template-columns: 30% 20% 20% 20%
+                        - grid-template-areas: |
+                            "icon temp icon2 icon3"
+                            "icon cond prec wind"
+                      card:
+                        - height: 65pt
+                        - box-shadow: none
+                        - backdrop-filter: none !important
+                        - background: none !important
+                      custom_fields:
+                        icon: null
+                        temp:
+                          - font-size: 18pt
+                          - font-weight: 700
+                          - justify-self: start
+                          - margin-bottom: '-12%'
+                        cond:
+                          - font-size: 10pt
+                          - text-transform: capitalize
+                          - justify-self: start
+                          - margin-top: '-12%'
+                        prec:
+                          - font-size: 14px
+                        icon3: null
+                        wind:
+                          - font-size: 14px
+              styles:
+                grid:
+                  - grid-template-areas: |
+                      "."
+                      "weather"
+                  - grid-template-rows: 95% 5%
+                  - grid-template-columns: 100%
+                card:
+                  - height: 765px
+                  - background: rgba(225,225,255,0.1) !important
+        styles:
+          card:
+            - background: none !important
+            - box-shadow: none !important
+            - backdrop-filter: none !important
+            - padding: 12px
+          grid:
+            - grid-template-columns: 100%
+            - grid-template-rows: 100%
+            - grid-template-areas: |
+                "sidebar"
+        view_layout:
+          grid-area: sidebar
+      - square: true
+        type: grid
+        cards:
+          - type: custom:button-card
+            aspect_ratio: 1/1
+            entity: media_player.bedroom_homepod
+            show_entity_picture: true
+            show_name: false
+            show_state: false
+            size: fill
+            styles:
+              grid:
+                - grid-template-rows: 100%
+                - grid-template-columns: 100%
+                - grid-template-areas: |
+                    "i"
+              card:
+                - padding: 0px
+            state:
+              - value: idle
+                show_icon: false
+                styles:
+                  card:
+                    - opacity: 45%
+                  icon:
+                    - display: none
+              - value: 'off'
+                show_icon: false
+                styles:
+                  card:
+                    - opacity: 45%
+                  icon:
+                    - display: none
+        columns: 1
+        title: H
+        view_layout:
+          grid-area: media
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#scenes'
+            button_type: name
+            name: Scenes
+            icon: mdi:palette
+            styles: >-
+              .bubble-pop-up-container {
+                --vertical-stack-card-gap: 0px!important;
+              } #header-container > div > div {
+                background: var(--popupBG)!important;
+              }     
+
+              #header-container > button {background: none;}    
+
+              .icon-container {background-color:var(--gray800)!important;} 
+
+              .icon-container > ha-icon
+              {color:var(--gray000)!important;opacity:1!important} 
+
+              .bubble-icon {
+                --mdc-icon-size: 24px !important;
+              }
+
+              .bubble-button-card-container {
+                background: var(--popup-card-background) !important;
+              }
+            bg_blur: '5'
+            shadow_opacity: '20'
+            bg_opacity: '98'
+            modules:
+              - '!default'
+          - square: false
+            type: grid
+            cards:
+              - type: custom:bubble-card
+                card_type: button
+                entity: switch.good_morning_stateful_scene
+                card_layout: large
+                name: Your scene name goes here
+                styles: |-
+                  .bubble-button-background {
+                    opacity: 1 !important;
+                    background-color: ${state === 'on' && hass.themes.darkMode  ? 'var(--yellow-tint)' : 'rgba(255,255,255,0)'} !important;
+                  }
+                  .bubble-icon-container {
+                    background: ${state === 'on' ? 'var(--yellow)' : 'null'} !important;
+                  }
+                  .bubble-icon {
+                    color: ${state === 'on' ? 'rgba(255,255,255,0.8)' : 'null'} !important;
+                  }
+                  .bubble-name {
+                    color: ${state === 'on' && hass.themes.darkMode  ? 'var(--yellow)' : 'null'} !important;
+                  }
+                  .bubble-state {
+                    color: ${state === 'on' && hass.themes.darkMode  ? 'var(--yellow)' : 'null'} !important;
+                  }
+                show_last_changed: true
+                button_type: switch
+              - type: custom:bubble-card
+                card_type: button
+                entity: switch.good_morning_stateful_scene
+                card_layout: large
+                name: Copy and paste this card to fill the grid
+                styles: |-
+                  .bubble-button-background {
+                    opacity: 1 !important;
+                    background-color: ${state === 'on' && hass.themes.darkMode  ? 'var(--yellow-tint)' : 'rgba(255,255,255,0)'} !important;
+                  }
+                  .bubble-icon-container {
+                    background: ${state === 'on' ? 'var(--yellow)' : 'null'} !important;
+                  }
+                  .bubble-icon {
+                    color: ${state === 'on' ? 'rgba(255,255,255,0.8)' : 'null'} !important;
+                  }
+                  .bubble-name {
+                    color: ${state === 'on' && hass.themes.darkMode  ? 'var(--yellow)' : 'null'} !important;
+                  }
+                  .bubble-state {
+                    color: ${state === 'on' && hass.themes.darkMode  ? 'var(--yellow)' : 'null'} !important;
+                  }
+                show_last_changed: true
+                button_type: switch
+            columns: 2
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#updates'
+            name: Updates
+            icon: mdi:arrow-up-circle-outline
+            styles: >-
+              .bubble-pop-up-container {
+                --vertical-stack-card-gap: 0px!important;
+              } #header-container > div > div {
+                background: var(--popupBG)!important;
+              }     
+
+              #header-container > button {background: none;}    
+
+              .icon-container {background-color:var(--gray800)!important;} 
+
+              .icon-container > ha-icon
+              {color:var(--gray000)!important;opacity:1!important} 
+
+              .bubble-icon {
+                --mdc-icon-size: 24px !important;
+              }
+
+              .bubble-button-card-container {
+                background: var(--popup-card-background) !important;
+              }
+            bg_blur: '5'
+            shadow_opacity: '20'
+            bg_opacity: '98'
+            button_type: name
+            modules: []
+          - type: custom:gap-card
+            height: 0
+          - type: iframe
+            url: /config/updates
+            aspect_ratio: 160%
+            card_mod:
+              style: |
+                ha-card {
+                  box-shadow: none;
+                  top: -50%
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#cameras'
+            button_type: name
+            name: Camera
+            icon: mdi:webcam
+            styles: >-
+              .bubble-pop-up-container {
+                --vertical-stack-card-gap: 0px!important;
+              } #header-container > div > div {
+                background: var(--popupBG)!important;
+              }     
+
+              #header-container > button {background: none;}    
+
+              .icon-container {background-color:var(--gray800)!important;} 
+
+              .icon-container > ha-icon
+              {color:var(--gray000)!important;opacity:1!important} 
+
+              .bubble-icon {
+                --mdc-icon-size: 24px !important;
+              }
+
+              .bubble-button-card-container {
+                background: var(--popup-card-background) !important;
+              }
+            bg_blur: '5'
+            shadow_opacity: '20'
+            bg_opacity: '98'
+            close_action:
+              action: perform-action
+              perform_action: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.show_cameras_on_tablet
+            modules: []
+          - type: custom:gap-card
+            height: 10px
+          - show_state: false
+            show_name: false
+            camera_view: live
+            fit_mode: cover
+            type: picture-entity
+            entity: camera.wall_tablet_camera
+            camera_image: camera.wall_tablet_camera
+            aspect_ratio: '4:3'
+            tap_action:
+              action: none
+            card_mod:
+              style: |
+                ha-card {
+                  box-shadow: none !important;
+                  border: none !important
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#system'
+            name: System Status
+            icon: mdi:server
+            styles: >-
+              .bubble-pop-up-container {
+                --vertical-stack-card-gap: 0px!important;
+              } #header-container > div > div {
+                background: var(--popupBG)!important;
+              }     
+
+              #header-container > button {background: none;}    
+
+              .icon-container {background-color:var(--gray800)!important;} 
+
+              .icon-container > ha-icon
+              {color:var(--gray000)!important;opacity:1!important} 
+
+              .bubble-icon {
+                --mdc-icon-size: 24px !important;
+              }
+
+              .bubble-button-card-container {
+                background: var(--popup-card-background) !important;
+              }
+            bg_blur: '5'
+            shadow_opacity: '20'
+            bg_opacity: '98'
+            button_type: name
+            modules: []
+          - type: custom:button-card
+            name: Home Assistant
+            styles:
+              card:
+                - background: none
+                - padding: 0px 0 0px 15px
+                - '--mdc-ripple-press-opacity': 0
+                - backdrop-filter: none !important
+                - box-shadow: none
+              name:
+                - font-size: 16px
+                - font-weight: 500
+                - justify-self: start
+                - align-self: center
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: grid
+                columns: 2
+                square: false
+                cards:
+                  - type: custom:button-card
+                    entity: sensor.processor_use
+                    show_name: false
+                    show_state: false
+                    show_icon: false
+                    custom_fields:
+                      title:
+                        card:
+                          type: custom:bubble-card
+                          card_type: button
+                          button_type: state
+                          entity: '[[[ return entity.entity_id ]]]'
+                          name: CPU Usage
+                          icon: mdi:cpu-64-bit
+                          styles: |
+                            .bubble-name { 
+                              font-size: 14px !important;
+                            }
+                      graph:
+                        card:
+                          type: custom:mini-graph-card
+                          entities:
+                            - '[[[ return entity.entity_id ]]]'
+                          show:
+                            name: false
+                            icon: false
+                            state: false
+                          line_color: var(--blue)
+                          card_mod:
+                            style: |
+                              ha-card {
+                                box-shadow: none;
+                                background: none;
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "title"
+                            "graph"
+                        - grid-template-rows: min-content min-content
+                      card:
+                        - padding: 0px
+                        - border-radius: 25px
+                        - background: var(--popup-card-background)
+                  - type: custom:button-card
+                    entity: sensor.memory_use
+                    show_name: false
+                    show_state: false
+                    show_icon: false
+                    custom_fields:
+                      title:
+                        card:
+                          type: custom:bubble-card
+                          card_type: button
+                          button_type: state
+                          entity: '[[[ return entity.entity_id ]]]'
+                          name: Memory
+                          icon: mdi:memory
+                          styles: |
+                            .bubble-name { 
+                              font-size: 14px !important;
+                            }
+                      graph:
+                        card:
+                          type: custom:mini-graph-card
+                          entities:
+                            - '[[[ return entity.entity_id ]]]'
+                          show:
+                            name: false
+                            icon: false
+                            state: false
+                          line_color: var(--blue)
+                          card_mod:
+                            style: |
+                              ha-card {
+                                box-shadow: none;
+                                background: none;
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "title"
+                            "graph"
+                        - grid-template-rows: min-content min-content
+                      card:
+                        - padding: 0px
+                        - border-radius: 25px
+                        - background: var(--popup-card-background)
+                  - type: custom:button-card
+                    entity: sensor.system_monitor_swap_use
+                    show_name: false
+                    show_state: false
+                    show_icon: false
+                    custom_fields:
+                      title:
+                        card:
+                          type: custom:bubble-card
+                          card_type: button
+                          button_type: state
+                          entity: '[[[ return entity.entity_id ]]]'
+                          name: Swap Used
+                          icon: mdi:cpu-64-bit
+                          styles: |
+                            .bubble-name { 
+                              font-size: 14px !important;
+                            }
+                      graph:
+                        card:
+                          type: custom:mini-graph-card
+                          entities:
+                            - '[[[ return entity.entity_id ]]]'
+                          show:
+                            name: false
+                            icon: false
+                            state: false
+                          line_color: var(--green)
+                          card_mod:
+                            style: |
+                              ha-card {
+                                box-shadow: none;
+                                background: none;
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "title"
+                            "graph"
+                        - grid-template-rows: min-content min-content
+                      card:
+                        - padding: 0px
+                        - border-radius: 25px
+                        - background: var(--popup-card-background)
+                  - type: custom:button-card
+                    entity: sensor.disk_use
+                    show_name: false
+                    show_state: false
+                    show_icon: false
+                    custom_fields:
+                      title:
+                        card:
+                          type: custom:bubble-card
+                          card_type: button
+                          button_type: state
+                          entity: '[[[ return entity.entity_id ]]]'
+                          name: Storage Usage
+                          icon: mdi:harddisk
+                          styles: |
+                            .bubble-name { 
+                              font-size: 14px !important;
+                            }
+                      graph:
+                        card:
+                          type: custom:mini-graph-card
+                          entities:
+                            - '[[[ return entity.entity_id ]]]'
+                          show:
+                            name: false
+                            icon: false
+                            state: false
+                          line_color: var(--green)
+                          card_mod:
+                            style: |
+                              ha-card {
+                                box-shadow: none;
+                                background: none;
+                    styles:
+                      grid:
+                        - grid-template-areas: |
+                            "title"
+                            "graph"
+                        - grid-template-rows: min-content min-content
+                      card:
+                        - padding: 0px
+                        - border-radius: 25px
+                        - background: var(--popup-card-background)
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.system_monitor_ipv4_address_hassio
+                    name: Current IP
+                    icon: mdi:ip-network
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.last_boot
+                    name: Last Boot
+                    icon: mdi:clock
+                    scrolling_effect: true
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.system_monitor_network_in_hassio
+                    name: Network In
+                    icon: mdi:arrow-right-circle-outline
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.system_monitor_network_out_hassio
+                    name: Network Out
+                    icon: mdi:arrow-left-circle-outline
+                    scrolling_effect: true
+              - type: horizontal-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.system_monitor_packets_in_hassio
+                    name: Packets In
+                    icon: mdi:network-outline
+                  - type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    entity: sensor.system_monitor_packets_out_hassio
+                    name: Packets Out
+                    icon: mdi:network-outline
+                    scrolling_effect: true
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                name: Restart HA
+                size: 40pt
+                styles:
+                  icon:
+                    - margin-top: '-0%'
+                  card:
+                    - box-shadow: none
+                    - padding: 18px
+                    - height: 50px
+                    - background-color: var(--blue)
+                tap_action:
+                  action: call-service
+                  service: homeassistant.restart
+                confirmation:
+                  text: This will interrupt all running automations and scripts.
+              - type: custom:button-card
+                name: Reboot VM
+                size: 40pt
+                styles:
+                  icon:
+                    - margin-top: '-0%'
+                  card:
+                    - box-shadow: none
+                    - padding: 18px
+                    - height: 50px
+                    - background-color: var(--orange)
+                tap_action:
+                  action: call-service
+                  service: hassio.host_reboot
+                confirmation:
+                  text: >-
+                    This will reboot the complete VM which includes Home
+                    Assistant and all add-ons.
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: pop-up
+            hash: '#wake-up'
+            name: Wake Up Automation
+            icon: mdi:sun-clock
+            styles: >-
+              .bubble-pop-up-container {
+                --vertical-stack-card-gap: 0px!important;
+              } #header-container > div > div {
+                background: var(--popupBG)!important;
+              }     
+
+              #header-container > button {background: none;}    
+
+              .icon-container {background-color:var(--gray800)!important;} 
+
+              .icon-container > ha-icon
+              {color:var(--gray000)!important;opacity:1!important} 
+
+              .bubble-icon {
+                --mdc-icon-size: 24px !important;
+              }
+
+              .bubble-button-card-container {
+                background: var(--popup-card-background) !important;
+              }
+            bg_blur: '5'
+            shadow_opacity: '20'
+            bg_opacity: '98'
+            button_type: name
+            modules: []
+            more_info_popup:
+              left: 300px
+              right: '-300px'
+              max_height: calc(100% - 72px)
+          - type: custom:gap-card
+            height: 1
+          - type: custom:button-card
+            template: button_toggle_small
+            entity: automation.weekend_wake_up
+            label: Enable This Automation
+            show_icon: false
+            styles:
+              label:
+                - margin-left: '-15%'
+                - margin-top: '-1%'
+              card:
+                - height: 35pt
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - background-color: var(--popup-card-background)
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: automation.weekend_wake_up
+                state: 'on'
+            card:
+              square: false
+              type: grid
+              cards:
+                - type: custom:button-card
+                  entity: input_datetime.wake_up_time
+                  show_state: true
+                  show_name: false
+                  show_icon: false
+                  show_label: true
+                  label: 'Fade-on will start at:'
+                  tap_action:
+                    action: none
+                  double_tap_action:
+                    action: more-info
+                  custom_fields:
+                    up:
+                      card:
+                        type: custom:button-card
+                        icon: mdi:chevron-up
+                        aspect_ratio: 1/1
+                        size: 20pt
+                        styles:
+                          card:
+                            - background-color: var(--gray100)
+                            - box-shadow: none
+                            - border-radius: 100%
+                            - width: 30pt
+                            - height: 30pt
+                        tap_action:
+                          action: call-service
+                          service: script.time_up
+                    down:
+                      card:
+                        type: custom:button-card
+                        icon: mdi:chevron-down
+                        aspect_ratio: 1/1
+                        size: 20pt
+                        styles:
+                          card:
+                            - background-color: var(--gray100)
+                            - box-shadow: none
+                            - border-radius: 100%
+                            - height: 30pt
+                            - width: 30pt
+                        tap_action:
+                          action: call-service
+                          service: script.time_down
+                  styles:
+                    grid:
+                      - grid-template-columns: 30% 70%
+                      - grid-template-rows: 50% 50%
+                      - gap: 6px
+                      - grid-template-areas: |
+                          "up l"
+                          "down s"
+                    card:
+                      - box-shadow: none
+                      - padding: 20px 26px 20px 20px
+                      - height: 95pt
+                      - background-color: var(--popup-card-background)
+                    state:
+                      - justify-self: end
+                      - font-size: 55px
+                      - font-weight: 500
+                    label:
+                      - color: var(--gray-800)
+                      - font-size: 18px
+                      - opacity: 65%
+                      - justify-self: end
+                      - align-self: bottom
+                    custom_fields:
+                      up:
+                        - margin-top: '-35%'
+                      down:
+                        - margin-top: '-32%'
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: input_select.mode
+                  name: Mode
+                  show_state: true
+                  show_last_changed: false
+                  show_attribute: false
+                  tap_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  sub_button:
+                    - entity: input_select.mode
+                      show_icon: false
+                  show_icon: false
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: input_number.wake_up_duration
+                  button_type: state
+                  name: Duration (minutes)
+                  icon: clock
+                  show_icon: false
+                  sub_button:
+                    - entity: input_number.wake_up_duration
+                      icon: mdi:minus
+                      show_background: false
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_number.decrement
+                        target:
+                          entity_id:
+                            - input_number.wake_up_duration
+                    - entity: input_number.wake_up_duration
+                      show_background: false
+                      show_icon: false
+                      show_name: false
+                      show_state: true
+                      tap_action:
+                        action: none
+                    - entity: input_number.wake_up_duration
+                      icon: mdi:plus
+                      show_background: false
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_number.increment
+                        target:
+                          entity_id: input_number.wake_up_duration
+                  show_state: false
+                  styles: >-
+                    ${card.querySelector('.bubble-state').innerText = "Set the
+                    fade-on duration"}
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: switch
+                  show_icon: false
+                  name: Temporary
+                  styles: >-
+                    ${card.querySelector('.bubble-state').innerText = "Enable to
+                    only run once"}
+
+                    .bubble-button-card-container {
+                      background: var(--popup-card-background) !important;
+                    }
+                  entity: input_boolean.wake_up_temporary
+                  show_state: true
+              columns: 1
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: pop-up
+            name: Tablet
+            icon: mdi:tablet
+            hash: '#tablet'
+            button_type: name
+            modules: []
+            styles: >-
+              .bubble-pop-up-container {
+                --vertical-stack-card-gap: 0px!important;
+              } #header-container > div > div {
+                background: var(--popupBG)!important;
+              }     
+
+              #header-container > button {background: none;}    
+
+              .icon-container {background-color:var(--gray800)!important;} 
+
+              .icon-container > ha-icon
+              {color:var(--gray000)!important;opacity:1!important} 
+
+              .bubble-icon {
+                --mdc-icon-size: 24px !important;
+              }
+
+              .bubble-button-card-container {
+                background: var(--popup-card-background) !important;
+              }
+          - type: entities
+            entities:
+              - entity: switch.fire_tablet_screen
+                name: Power
+                icon: mdi:power
+              - entity: number.fire_tablet_screen_brightness
+                name: Brightness
+                icon: mdi:brightness-7
+              - entity: switch.tp_link_smart_plug_c07e
+                name: Charger
+                icon: mdi:lightning-bolt
+              - entity: switch.fire_tablet_motion_detection
+                name: Motion Detection
+                icon: mdi:motion-sensor
+              - entity: sensor.fire_tablet_battery
+                name: Battery
+            card_mod:
+              style: |
+                ha-card {
+                  background: none;
+                  box-shadow: none !important
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.fire_tablet_battery
+                color: rgb(180,178,249)
+            show:
+              name: false
+              state: false
+              icon: false
+            card_mod:
+              style: |
+                ha-card {
+                  background: none;
+                  box-shadow: none !important
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: markdown
+            content: '{{ now().hour }}:{{ now().minute }}'
+            card_mod:
+              style: |
+                ha-card {
+                  font-size: 60px;
+                  font-weight: 250;
+                  height: 50px;
+                  margin-top: -2%;
+                  background: none;
+                  box-shadow: none;
+                  backdrop-filter: none !important
+          - type: markdown
+            content: '{{ now().month }}/{{ now().day }}/{{ now().year }}'
+            card_mod:
+              style: |
+                ha-card {
+                  font-size: 15px;
+                  font-weight: 300;
+                  margin-top: -12%;
+                  background: none;
+                  box-shadow: none;
+                  backdrop-filter: none !important
+          - type: custom:layout-card
+            layout: |
+              grid-template-columns: 4% 92% 4%
+              grid-template-rows: 4% 92% 4%
+              grid-template-areas: |
+                ". . ."
+                ". cards ."
+                ". . ."
+            cards:
+              - type: grid
+                columns: 2
+                square: false
+                cards:
+                  - type: custom:button-card
+                    template: bubble_card_graph
+                    entity: sensor.bedroom_motion_sensor_temperature
+                    variables:
+                      card_name: Temp.
+                      card_icon: mdi:thermometer
+                      graph_color: '#A2AADB'
+                  - type: custom:button-card
+                    template: bubble_card_graph
+                    entity: sensor.bedroom_humidity
+                    variables:
+                      card_name: Humidity
+                      card_icon: mdi:water
+                      graph_color: '#AEC8A4'
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: sensor.lights_on_dashboard_counter
+                name: Lights
+                icon: mdi:lightbulb
+                card_layout: normal
+                styles: |-
+                  ha-card {
+                    --bubble-main-background-color: rgba(255,255,255,0.1) !important;
+                  }
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: counter.sheetchangecounter
+                show_name: true
+                show_last_changed: false
+                show_attribute: false
+                attribute: icon
+                name: 'Nights '
+                icon: mdi:bed
+                styles: >-
+                  ha-card {
+                    --bubble-main-background-color: rgba(255,255,255,0.1) !important;
+                  }
+
+                  ${card.querySelector('.bubble-name').innerText =
+                  hass.states['counter.sheetchangecounter'].state + ' nights' }
+
+                  ${card.querySelector('.bubble-state').innerText = 'since last
+                  sheets change' }
+                sub_button:
+                  - entity: counter.sheetchangecounter
+                    show_background: false
+                    name: ''
+                    show_name: true
+                    icon: mdi:restore
+                    tap_action:
+                      action: call-service
+                      target:
+                        entity_id: entity
+                      service: counter.reset
+                card_layout: normal
+          - type: custom:gap-card
+            height: 5
+          - type: custom:button-card
+            name: Quick Actions
+            styles:
+              card:
+                - background: none
+                - box-shadow: none
+                - backdrop-filter: none !important
+              name:
+                - justify-self: start
+                - margin-left: 8%
+                - font-size: 14pt
+                - font-weight: 600
+          - type: custom:layout-card
+            layout: |
+              grid-template-columns: 4% 92% 4%
+              grid-template-rows: 4% 92% 4%
+              grid-template-areas: |
+                ". . ."
+                ". cards ."
+                ". . ."
+            cards:
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: automation.motion_sensor
+                name: Motion Sensor
+                icon: mdi:motion-sensor
+                styles: |-
+                  .bubble-icon {
+                    color: ${hass.states[entity].state === 'on' ? 'rgb(255,255,255)' : 'rgba(255,255,255,0.6)'} !important;
+                  }
+                  ha-card {
+                    --bubble-main-background-color: rgba(255,255,255,0.1) !important;
+                  }
+                sub_button:
+                  - entity: automation.motion_sensor
+                    icon: mdi:toggle-switch
+                    show_background: false
+                    tap_action:
+                      action: call-service
+                      target:
+                        entity_id: entity
+                      service: automation.turn_off
+                    visibility:
+                      - condition: state
+                        entity: automation.motion_sensor
+                        state: 'on'
+                  - entity: automation.motion_sensor
+                    icon: mdi:toggle-switch-off-outline
+                    show_background: false
+                    tap_action:
+                      action: call-service
+                      target:
+                        entity_id: entity
+                      service: automation.turn_on
+                    visibility:
+                      - condition: state
+                        entity: automation.motion_sensor
+                        state: 'off'
+                show_last_changed: false
+                show_state: true
+                card_layout: normal
+                button_action:
+                  tap_action:
+                    action: none
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                entity: automation.automatic_fan
+                name: Auto Fan
+                icon: mdi:ceiling-fan
+                styles: |-
+                  .bubble-icon {
+                    color: ${hass.states[entity].state === 'on' ? 'rgb(255,255,255)' : 'rgba(255,255,255,0.6)'} !important;
+                  }
+                  ha-card {
+                    --bubble-main-background-color: rgba(255,255,255,0.1) !important;
+                  }
+                sub_button:
+                  - entity: input_number.fan_auto_trigger_temperature
+                    icon: mdi:minus
+                    show_background: false
+                    show_icon: true
+                    tap_action:
+                      action: call-service
+                      target:
+                        entity_id: entity
+                      service: input_number.decrement
+                  - entity: input_number.fan_auto_trigger_temperature
+                    show_name: false
+                    show_icon: false
+                    show_state: true
+                    show_background: false
+                  - entity: input_number.fan_auto_trigger_temperature
+                    icon: mdi:plus
+                    show_background: false
+                    tap_action:
+                      action: call-service
+                      target:
+                        entity_id: entity
+                      service: input_number.increment
+                card_layout: normal
+                button_action: {}
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                name: Wake Up Automation
+                icon: mdi:weather-sunset-up
+                entity: automation.weekend_wake_up
+                styles: |-
+                  .bubble-icon {
+                    color: ${hass.states[entity].state === 'on' ? 'rgb(255,255,255)' : 'rgba(255,255,255,0.6)'} !important;
+                  }
+                  ha-card {
+                    --bubble-main-background-color: rgba(255,255,255,0.1) !important;
+                  }
+                card_layout: normal
+                tap_action:
+                  action: none
+                button_action:
+                  tap_action:
+                    action: navigate
+                    navigation_path: '#wake-up'
+        view_layout:
+          grid-area: sidebar
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              backdrop-filter: none !important;
+              padding: 12px
+            }
+      - square: true
+        type: grid
+        cards:
+          - type: custom:button-card
+            aspect_ratio: 1/1
+            entity: media_player.bedroom_homepod
+            show_entity_picture: false
+            show_icon: false
+            show_name: false
+            show_state: false
+            styles:
+              grid:
+                - grid-template-columns: 33% 29% 8% 8% 13%
+                - grid-template-rows: 10% 10% 10% 30% 11.5% 6.5% 6%
+                - gap: 6px
+                - grid-template-areas: >
+                    "power . . . vol_up"
+
+                    ". . . . vol_current"
+
+                    ". . . . vol_down"
+
+                    ". . . . ."
+
+                    "title title title title title"
+
+                    "artist_album artist_album artist_album artist_album
+                    artist_album"
+
+                    "previous play_pause next next next"
+              card:
+                - background: >-
+                    linear-gradient(180deg,rgba(255, 255, 255, 0) 40%, rgba(0,
+                    0, 0, 0.8) 100%)
+                - padding: 10px
+                - box-shadow: none
+                - backdrop-filter: none !important
+                - padding-top: 15px
+              custom_fields:
+                power:
+                  - margin-top: '-40%'
+                title:
+                  - justify-self: start
+                  - font-size: 18pt
+                  - font-weight: 600
+                  - margin-left: 2%
+                  - margin-bottom: 8%
+                artist_album:
+                  - justify-self: start
+                  - margin-left: 2%
+                  - margin-bottom: 9%
+            custom_fields:
+              power:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  icon: mdi:power
+                  aspect_ratio: 1/1
+                  show_name: false
+                  size: 18px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - height: 30px
+                      - border-radius: 12px
+                      - width: 35px
+                    icon:
+                      - color: white
+                  tap_action:
+                    action: call-service
+                    service: remote.toggle
+                    data: {}
+                    target:
+                      entity_id: remote.bedroom_homepod
+              title: |
+                [[[ return entity.attributes.media_title ]]]
+              artist_album: >
+                [[[ return entity.attributes.media_artist + '--' +
+                entity.attributes.media_album_name ]]]
+              play_pause:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  icon: mdi:play
+                  show_name: false
+                  size: 42px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - border-radius: 12px
+                      - height: 30px
+                    icon:
+                      - color: white
+                  state:
+                    - value: playing
+                      icon: mdi:pause
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_play_pause
+                    target:
+                      entity_id: '[[[ return entity.entity_id ]]]'
+              next:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  icon: mdi:fast-forward
+                  show_name: false
+                  size: 42px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - height: 30px
+                      - border-radius: 12px
+                    icon:
+                      - color: white
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_next_track
+                    target:
+                      entity_id: '[[[ return entity.entity_id ]]]'
+              previous:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  icon: mdi:rewind
+                  show_name: false
+                  size: 32px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - height: 30px
+                      - border-radius: 12px
+                    icon:
+                      - color: white
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_previous_track
+                    target:
+                      entity_id: '[[[ return entity.entity_id ]]]'
+              vol_up:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  icon: mdi:chevron-up
+                  aspect_ratio: 1/1
+                  show_name: false
+                  size: 18px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - height: 30px
+                      - border-radius: 12px
+                    icon:
+                      - color: white
+                  tap_action:
+                    action: call-service
+                    service: media_player.volume_up
+                    target:
+                      entity_id: '[[[ return entity.entity_id ]]]'
+                    data: {}
+              vol_current:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  show_state: true
+                  state_display: '[[[ return entity.attributes.volume_level *100 |1 ]]]'
+                  aspect_ratio: 1/1
+                  show_name: false
+                  show_icon: false
+                  size: 12px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - height: 30px
+                      - border-radius: 12px
+                    state:
+                      - color: white
+                      - font-size: 12px
+              vol_down:
+                card:
+                  type: custom:button-card
+                  entity: '[[[ return entity.entity_id ]]]'
+                  icon: mdi:chevron-down
+                  aspect_ratio: 1/1
+                  show_name: false
+                  size: 18px
+                  styles:
+                    card:
+                      - background-color: rgba(255,255,255,0.1)
+                      - box-shadow: none
+                      - height: 30px
+                      - border-radius: 12px
+                    icon:
+                      - color: white
+                  tap_action:
+                    action: call-service
+                    service: media_player.volume_down
+                    target:
+                      entity_id: '[[[ return entity.entity_id ]]]'
+                    data: {}
+            state:
+              - value: idle
+                custom_fields:
+                  artist_album: Not Playing
+                styles:
+                  card:
+                    - background: none
+                  custom_fields:
+                    vol_up:
+                      - display: none
+                    vol_down:
+                      - display: none
+                    vol_current:
+                      - display: none
+                    previous:
+                      - opacity: 50%
+                    play_pause:
+                      - opacity: 50%
+                    next:
+                      - opacity: 50%
+              - value: 'off'
+                icon: mdi:music
+                custom_fields:
+                  artist_album: 'Off'
+                styles:
+                  card:
+                    - background: none
+                  icon:
+                    - height: 100pt
+                    - opacity: 50%
+                  custom_fields:
+                    vol_up:
+                      - display: none
+                    vol_down:
+                      - display: none
+                    vol_current:
+                      - display: none
+                    previous:
+                      - opacity: 50%
+                    play_pause:
+                      - opacity: 50%
+                    next:
+                      - opacity: 50%
+        columns: 1
+        title: HomePod
+        view_layout:
+          grid-area: media
+    theme: Wall Tablet Theme - NEW

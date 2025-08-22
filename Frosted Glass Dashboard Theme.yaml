@@ -1,0 +1,216 @@
+Frosted Glass Dashboard Theme:
+  # Spacings and radius
+  horizontal-stack-card-margin: 100px
+  vertical-stack-card-margin: 2px
+  grid-card-gap: 10px
+  ## ha-card-border-width: "0px" # Removes default 1px line
+  ## ha-card-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
+  ## ha-card-border-radius: 30px
+  masonry-view-card-margin: 4px 4px
+  vertical-stack-card-gap: 4px
+  stack-card-gap: 0px
+
+  # Main Interface Colors
+  primary-color: var(--blue-dark)
+  accent-color: var(--blue-dark)
+  primary-background-color: var(--background)
+  secondary-background-color: var(--background)
+  divider-color: var(--gray100)
+
+  # Text
+  primary-text-color: var(--gray800)
+  secondary-text-color: var(--gray500)
+  text-primary-color: var(--gray800)
+  disabled-text-color: var(--gray400)
+  text-accent-color: var(--gray100)
+  warning-color: var(--orange)
+  gauge-color: var(--green)
+  success-color: var(--green)
+
+  # Header:
+  app-header-background-color: var(--background)
+  app-header-text-color: var(--gray800)
+  app-header-selection-bar-color: transparant
+  app-header-edit-background-color: var(--background)
+  app-header-edit-text-color: var(--gray800)
+
+  # Cards
+  ## card-background-color: var(--gray000)
+  ha-card-background: var(--gray000)
+  ha-card-border-color: transparent
+  bubble-main-background-color: var(--ha-card-background) !important
+  ## paper-listbox-background-color: var(--gray000)
+
+  # Sidebar Menu
+  sidebar-icon-color: var(--gray400)
+  sidebar-text-color: var(--gray800)
+  sidebar-background-color: var(--background)
+  sidebar-selected-icon-color: var(--gray800)
+  sidebar-selected-text-color: var(--gray800)
+  sidebar-card-background: rgb(50,51,54)
+  sidebar-color: rgba(44,44,47,0.5)
+
+  # Table
+  table-row-background-color: var(--gray100)
+  table-row-alternative-background-color: var(--gray200)
+  data-table-background-color: var(--gray100)
+  mdc-text-field-fill-color: var(--gray100)
+
+  # Input
+  input-fill-color: var(--gray100)
+  input-dropdown-icon-color: var(--gray500)
+  material-background-color: var(--gray200)
+  material-secondary-background-color: red
+  input-ink-color: var(--gray800)
+  input-label-ink-color: var(--gray500)
+  input-idle-line-color: var(--gray500)
+  input-hover-line-color: var(--gray800)
+  mdc-select-fill-color: var(--input-fill-color)
+  mdc-select-ink-color: var(--input-ink-color)
+  mdc-select-label-ink-color: var(--input-label-ink-color)
+  mdc-select-idle-line-color: var(--input-idle-line-color)
+  mdc-select-dropdown-icon-color: var(--input-dropdown-icon-color)
+  mdc-select-hover-line-color: var(--input-hover-line-color)
+  mdc-text-field-disabled-fill-color: var(--gray300)
+
+  # Modal screen
+  mdc-theme-surface: var(--gray000)
+
+  # VisionOS theme
+  card-background-color: var(--secondary-background-color) # Data table background
+  paper-listbox-background-color: var(--primary-background-color)
+  ha-card-border-radius: 20px
+  paper-card-background-color: var(--ha-card-background)
+  rgb-card-background-color: rgb(10, 10, 10) # see https://github.com/basnijholt/lovelace-ios-themes/issues/60
+  ha-card-border-width: 0 # https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/82#event-7732695357
+  ha-card-backdrop-filter: blur(20px)
+  ha-card-box-shadow: 0.5px 0.5px 1px 0px rgba(255, 255, 255, 0.40) inset, -0.5px -0.5px 1px 0px rgba(255, 255, 255, 0.10) inset, 0px 1px 2px 0px rgba(0, 0, 0, 0.10)
+
+  # Checkboxes
+  mdc-checkbox-unchecked-color: var(--gray700)
+
+  # Colors
+  orange-color: var(--orange)
+  green-color: var(--green)
+  blue-color: var(--blue)
+  red-color: var(--red)
+  purple-color: var(--purple)
+  yellow-color: var(--yellow)
+  grey-color: var(--gray400)
+
+  # Energy
+  energy-grid-consumption-color: var(--blue-dark)
+  energy-grid-return-color: var(--purple)
+  energy-solar-color: var(--orange)
+  energy-non-fossil-color: var(--green)
+  energy-battery-out-color: "#4db6ac"
+  energy-battery-in-color: "#f06292"
+  energy-gas-color: var(--gray400)
+
+  #######################################################
+  ############### Custom global variables ###############
+  #######################################################
+
+  # Gradients
+  active-light: linear-gradient(145deg, var(--light-on-gradient-start) 10%, var(--light-on-gradient-end) 100%)
+  active-light-off: linear-gradient(145deg, var(--light-off-gradient-start) 0%, var(--light-off-gradient-end) 50%)
+
+  # Colors
+  black: "#28282A"
+  black2: "#0f0f10"
+  white: "#f5f7fa"
+
+  ########################################################
+  ############### Variables based on modes ###############
+  ########################################################
+
+  background: "#28282A"
+
+  light-off-gradient-start: "rgba(255,176,233,0.15)"
+  light-off-gradient-end: "rgba(50,50,52,1)"
+
+  light-on-gradient-start: "rgba(255,176,233,0.05)"
+  light-on-gradient-end: "rgba(255,220,178,1)"
+
+  icon-off: rgb(167,167,168)
+
+  highlight: 250, 251, 252, 0.05
+  highlight_active: 40, 40, 42, 0.1
+  highlight2: 250, 251, 252, 0.1
+
+  active-small: linear-gradient(90deg,rgba(169, 181, 223, 1) 0%, rgba(120, 134, 199, 1) 50%, rgba(45, 51, 107, 1) 100%)
+  active-big: linear-gradient(90deg,rgba(169, 181, 223, 1) 0%, rgba(120, 134, 199, 1) 50%, rgba(45, 51, 107, 1) 100%)
+
+  popupBG: "rgb(26,26,27)"
+  gray000: "#3a3b3d"
+  gray100: "#353637"
+  gray150: "#323234"
+  gray200: "#404142"
+  gray300: "#555658"
+  gray400: "#737476"
+  gray500: "#939496"
+  gray600: "#c8c9cb"
+  gray700: "#eff0f2"
+  gray800: "#ffffff"
+
+  card-background: rgba(0,0,0,0.4)
+  popup-card-background: rgb(50,50,53)
+  bubble-pop-up-main-background-color: var(--popupBG)
+  white-light-color: rgb(255,250,229)
+  tile-background-color: rgba(225,225,225,0.1)
+
+  # Colors
+  green: "#b4d29b"
+  purple: "#d5c1ed"
+  yellow: "#fbf1be"
+  red: "#cd816c"
+  blue: "#abcbf8"
+  blue-dark: "#c8ddfa"
+  orange: "#ffba8a"
+  pink: "#f6b9c3"
+  lime: "#eaf6bc"
+
+  card-mod-view-yaml: |
+    .: |
+      hui-view {
+        background: none !important;
+      }
+
+    #################################################
+    #                                               #
+    #              GRID CARD HEADINGS               #
+    #                                               #
+    #################################################
+
+    grid-layout$:
+      hui-grid-card:
+        .: |
+          hui-grid-card {
+            padding-bottom: 1vw;
+          }
+        $: |
+          /* default */
+          h1 {
+            font-size: 2.0vw !important;
+            line-height: 0 !important;
+            font-weight: 600 !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding: 0.2vw 0 2vw 0 !important;
+            letter-spacing: normal !important;
+            width: 100%;
+          }
+          /* portrait */
+          @media screen and (max-width: 1200px) {
+            h1 {
+              font-size: 3.3vw !important;
+              line-height: 1.1vw !important;
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            h1 {
+              font-size: 5.5vw !important;
+              line-height: 6vw !important;
+              margin: 2vw 0 0 0 !important;
+            }
+          }
