@@ -2695,6 +2695,7 @@ base_media:
         ]]]
 views:
   - title: Home
+    theme: "Wall-Tablet-Theme"
     layout:
       grid-template-columns: 25% 22.5% 22.5% 22.5%
       grid-column-gap: 18pt
