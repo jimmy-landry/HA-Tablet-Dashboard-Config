@@ -263,5 +263,6 @@ You didn't install [layout card](https://my.home-assistant.io/redirect/hacs_repo
 - To [matt8707](https://github.com/matt8707) for providing the dashboard layout, button card templates, background image, bounce animation, and other odds and ends
 - To [Clooos](https://github.com/Clooos) for his amazing work with Bubble Card
 - To [Nezz](https://github.com/Nezz) (Adam) for the visionOS and Liquid Glass theme
+- To [Basmilius](https://github.com/basmilius) for the [weather icons](https://basmilius.github.io/weather-icons/index.html)
 - To [Thomas Lovén](https://github.com/thomasloven) for layout card, card mod, and a bunch of other custom integrations I can't remember the names of
 - And to [RomRider](https://github.com/RomRider) for the most versitile card ever created, Button card.
