@@ -1,3 +1,11 @@
+**🛑 Hey, no peeking! I haven't made a video about this yet! 🛑** <br>
+
+...
+
+
+Okay fine, I guess there's nothing I can do to stop you. 🙄 <br>
+But don't forget to [subscribe to my channel](https://youtube.com/@dontuseiftamperevident?sub_confirmation=1) so you don't miss the video!
+
 # Frosted Glass Home Assistant Tablet Dashboard inspired by iOS 26
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/jimmy-landry/ha-tablet-dashboard-config)
