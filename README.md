@@ -1,7 +1,7 @@
 # HA-Tablet-Dashboard-Config
 
 >[!NOTE]
->**Under construction**! <br>
+>**⚠️ Under construction! ⚠️** <br>
 >Hi everyone! Glad you're still enjoying this dashboard! For the next little while new files will be popping in and out of this repo due to a new video I'm in the process of making. Don't worry about them, you don't need them for the dashboard as it is now. However, if you're curious what they're all about, make sure you [subscribe to my channel](https://youtube.com/@dontuseiftamperevident?sub_confirmation=1) so you don't miss the new videos.
 >
 >In the meantime, the "wall_tablet_grid_redacted.yaml" file is now named "Original Dashboard Config" and the "theme.yaml" file is now named "Original Dashboard Theme.yaml."
