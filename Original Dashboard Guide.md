@@ -18,7 +18,7 @@ Ensure you have **all** of the following custom components installed. Otherwise,
  - [Simple Weather Card](https://github.com/kalkih/simple-weather-card)
  - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 > [!IMPORTANT]
-> The layout card component is **CRUCIAL** for the dashboard to function properly. If not installed, nothing will load and you'll get a nice, large error box like the one below that shows the _entire_ config file that makes the dashboard work. No one wants that, so please be sure you have this installed. I got a lot of questions about this so I figured I should make it extra clear.
+> The layout card component is **CRUCIAL** for the dashboard to function properly. If not installed, nothing will load and you'll get a nice, large error box that shows the _entire_ config file that makes the dashboard work. No one wants that, so please be sure you have this installed. I got a lot of questions about this so I figured I should make it extra clear.
 
 ### Configure Date & Time Sensors (optional)
 
