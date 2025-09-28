@@ -165,3 +165,5 @@ You didn't install [layout card](https://my.home-assistant.io/redirect/hacs_repo
 - To [matt8707](https://github.com/matt8707) for providing the dashboard layout and button card templates
 - To [Thomas Lovén](https://github.com/thomasloven) for layout card and card mod
 - And to [RomRider](https://github.com/RomRider) for the most versitile card ever created, Button card
+
+<p align="right"><a href="#top"><img src="https://github.com/user-attachments/assets/ddfb8c1b-f779-4959-b267-be5ca41233ad" height="70px"></a></p>
