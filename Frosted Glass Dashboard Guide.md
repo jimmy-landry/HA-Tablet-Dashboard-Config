@@ -270,3 +270,5 @@ You didn't install [layout card](https://my.home-assistant.io/redirect/hacs_repo
 - To [Basmilius](https://github.com/basmilius) for the [weather icons](https://basmilius.github.io/weather-icons/index.html)
 - To [Thomas Lovén](https://github.com/thomasloven) for layout card, card mod, and a bunch of other custom integrations I can't remember the names of
 - And to [RomRider](https://github.com/RomRider) for the most versitile card ever created, Button card.
+
+<p align="right"><a href="#top"><img src="https://github.com/user-attachments/assets/ddfb8c1b-f779-4959-b267-be5ca41233ad" height="70px"></a></p>
