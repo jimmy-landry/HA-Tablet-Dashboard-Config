@@ -42,7 +42,9 @@ But don't forget to [subscribe to my channel](https://youtube.com/@dontuseiftamp
 ![GitHub Repo stars](https://img.shields.io/github/stars/jimmy-landry/ha-tablet-dashboard-config)
 [![YouTube](https://img.shields.io/badge/YouTube-Tamper%20Evident-red?logo=youtube)](https://www.youtube.com/@dontuseiftamperevident)
 
-I've finally updated my long outdated tablet dashboard! I really wanted to focus on making it modern, sleek and everything in between. This page will guide you through the process of setting up this dashboard on your Home Assistant instance and answer some commonly asked questions from last time.
+![GitHub screenshots 01 001](https://github.com/user-attachments/assets/a5ff7ab4-521b-47f2-bd6c-0e96dded0cf3)
+
+I've finally updated my long outdated tablet dashboard! I really wanted to focus on making it modern, sleek and everything in between, and Apple's iOS 26 update gave me some great ideas. This page will guide you through the process of loading this dashboard into your Home Assistant instance and answer some commonly asked questions from last time.
 
 Thanks for all the positive feedback on last year's dashboard(s), it really means a lot!
 
@@ -69,6 +71,8 @@ Ensure you have **all** of the following custom components installed. Otherwise,
 > The layout card component is **CRUCIAL** for the dashboard to function properly. If not installed, nothing will load and you'll get a nice, large error box that shows the _entire_ config file that makes the dashboard work. No one wants that, so please be sure you have this installed. I got a lot of questions about this last time around so I figured I should make it extra clear.
 
 ### Configure Date & Time Sensors (optional)
+
+![GitHub screenshots 01 002](https://github.com/user-attachments/assets/184e391e-a492-4c90-bdda-66382ef8af5b)
 
 If you would like to have the time displayed in 12 hour format and the names of the weekdays and months shown instead of the numbers, you'll need to configure a few custom sensors to provide this data as Home Assistant doesn't allow you to do this natively. To do this, go to Settings > Devices and Services > Helpers > Create Helper > Template and choose "Template a sensor."
 In the dialog box, enter a name, choose an icon if you want, and in the value template field, paste in the code from one of the below dropdowns.
