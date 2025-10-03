@@ -7,7 +7,7 @@ This repository contains all the files you need to get started with my Home Assi
 
 ![GitHub screenshots 01 001](https://github.com/user-attachments/assets/a5ff7ab4-521b-47f2-bd6c-0e96dded0cf3)
 
-#### Video • [Written Guide](https://github.com/jimmy-landry/HA-Tablet-Dashboard-Config/blob/main/Frosted%20Glass%20Dashboard%20Guide.md)
+#### [Video](https://youtu.be/vtzaqNQkd6I) • [Written Guide](https://github.com/jimmy-landry/HA-Tablet-Dashboard-Config/blob/main/Frosted%20Glass%20Dashboard%20Guide.md)
 
 ---
 
