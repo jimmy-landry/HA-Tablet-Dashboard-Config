@@ -1,10 +1,10 @@
 # The Original Tamper Evident HA Tablet Dashboard
 
-<img width="1240" alt="Screenshot of the tablet dashboard." src="https://github.com/jimmylandry54/HA-Tablet-Dashboard-Config/assets/121106900/462097c4-b3cf-4529-90f8-1bcfb4f361d4">
-
 ![GitHub Repo stars](https://img.shields.io/github/stars/jimmy-landry/ha-tablet-dashboard-config)
 ![YouTube Video Views](https://img.shields.io/youtube/views/d9ewXJsxKrI)
+![YouTube Video Likes](https://img.shields.io/youtube/likes/d9ewXJsxKrI)
 [![YouTube](https://img.shields.io/badge/YouTube-Tamper%20Evident-red?logo=youtube)](https://www.youtube.com/@dontuseiftamperevident)
+<img width="1240" alt="Screenshot of the tablet dashboard." src="https://github.com/jimmylandry54/HA-Tablet-Dashboard-Config/assets/121106900/462097c4-b3cf-4529-90f8-1bcfb4f361d4">
 
 ## ⬙ BEFORE YOU START ⬙
 
