@@ -1,48 +1,9 @@
-**🛑 Hey, no peeking! I haven't made a video about this yet! 🛑** <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-...
-<br>
-<br>
-<br>
-<br>
-<br>
-............
-<br>
-<br>
-<br>
-<br>
-
-Okay fine, I guess there's nothing I can do to stop you. 🙄 <br>
-But don't forget to [subscribe to my channel](https://youtube.com/@dontuseiftamperevident?sub_confirmation=1) so you don't miss the video!
-
 # Frosted Glass Home Assistant Tablet Dashboard inspired by iOS 26
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/jimmy-landry/ha-tablet-dashboard-config)
 [![YouTube](https://img.shields.io/badge/YouTube-Tamper%20Evident-red?logo=youtube)](https://www.youtube.com/@dontuseiftamperevident)
 
-![GitHub screenshots 01 001](https://github.com/user-attachments/assets/a5ff7ab4-521b-47f2-bd6c-0e96dded0cf3)
+<img width="1920" height="1080" alt="Preview" src="https://github.com/user-attachments/assets/a5ff7ab4-521b-47f2-bd6c-0e96dded0cf3"/>
 
 I've finally updated my long outdated tablet dashboard! I really wanted to focus on making it modern, sleek and everything in between, and Apple's iOS 26 update gave me some great ideas. This page will guide you through the process of loading this dashboard into your Home Assistant instance and answer some commonly asked questions from last time.
 
@@ -72,7 +33,9 @@ Ensure you have **all** of the following custom components installed. Otherwise,
 
 ### Configure Date & Time Sensors (optional)
 
-![GitHub screenshots 01 002](https://github.com/user-attachments/assets/184e391e-a492-4c90-bdda-66382ef8af5b)
+<img width="1920" height="1080" alt="Preview" src="https://github.com/user-attachments/assets/184e391e-a492-4c90-bdda-66382ef8af5b"/>
+
+<br>
 
 If you would like to have the time displayed in 12 hour format and the names of the weekdays and months shown instead of the numbers, you'll need to configure a few custom sensors to provide this data as Home Assistant doesn't allow you to do this natively. To do this, go to Settings > Devices and Services > Helpers > Create Helper > Template and choose "Template a sensor."
 In the dialog box, enter a name, choose an icon if you want, and in the value template field, paste in the code from one of the below dropdowns.
@@ -193,6 +156,11 @@ Take note of the names you choose for the sensors as you'll need them once you c
 -  Save and exit.
 > [!TIP]
 > I found that the dashboard looks pretty good with most other dark-ish photos as well so feel free to use whatever image you want, you don't have to use the one included in this repo.
+
+<img width="1920" height="1080" alt="different background 001" src="https://github.com/user-attachments/assets/89312943-1d1e-482c-b30a-32e33d7d7f46" />
+<div align="center">
+  <strong>The dashboard seen in the YouTube thumbnail</strong>
+</div>
 
 ### 6. Dealing with all the errors (the fun part!)
 - Because my entities most likely don't exist on your Home Assistant instance, pretty much nothing is going to work right off the bat.
