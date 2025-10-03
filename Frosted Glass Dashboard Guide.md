@@ -1,6 +1,8 @@
 # Frosted Glass Home Assistant Tablet Dashboard inspired by iOS 26
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/jimmy-landry/ha-tablet-dashboard-config)
+![YouTube Video Views](https://img.shields.io/youtube/views/vtzaqNQkd6I)
+![YouTube Video Likes](https://img.shields.io/youtube/likes/vtzaqNQkd6I)
 [![YouTube](https://img.shields.io/badge/YouTube-Tamper%20Evident-red?logo=youtube)](https://www.youtube.com/@dontuseiftamperevident)
 
 <img width="1920" height="1080" alt="Preview" src="https://github.com/user-attachments/assets/a5ff7ab4-521b-47f2-bd6c-0e96dded0cf3"/>
@@ -159,7 +161,7 @@ Take note of the names you choose for the sensors as you'll need them once you c
 
 <img width="1920" height="1080" alt="different background 001" src="https://github.com/user-attachments/assets/89312943-1d1e-482c-b30a-32e33d7d7f46" />
 <div align="center">
-  <strong>The dashboard seen in the YouTube thumbnail</strong>
+  <strong>As seen in the YouTube thumbnail</strong>
 </div>
 
 ### 6. Dealing with all the errors (the fun part!)
