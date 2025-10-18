@@ -184,7 +184,7 @@ Take note of the names you choose for the sensors as you'll need them once you c
 > ```{{ states('sensor.weekday') }} ## replace "weekday" with the entity ID of your weekday sensor```
 >
 > **To add the month of the year:** <br>
-> ```{{ states('sensor.month') }} ## replace "month" with the entity ID of your weekday sensor```
+> ```{{ states('sensor.month') }} ## replace "month" with the entity ID of your month sensor```
 >
 > **For a result like "Thursday, August 7":** <br>
 > ```{{ states('sensor.weekday') }}, {{ states('sensor.month') }} {{ now().day }}```
