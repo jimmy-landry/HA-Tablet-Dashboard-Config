@@ -228,7 +228,7 @@ The font is called Quicksand and you can use it for free [with Google Fonts](htt
 There are a few ways to do this, but I personally like using the [Kiosk Mode integration](https://my.home-assistant.io/redirect/hacs_repository/?owner=NemesisRE&repository=kiosk-mode&category=plugin) because you only need around 3 lines of config to get it working. However, you can also use [Browser Mod](https://my.home-assistant.io/redirect/hacs_repository/?owner=thomasloven&repository=hass-browser_mod&category=integration) or the [Wallpanel integration](https://my.home-assistant.io/redirect/hacs_repository/?owner=j-a-n&repository=lovelace-wallpanel&category=plugin) which can show a screensaver when your tablet isn't being used.
 
 **Why does nothing load and a big red error that says "Custom element doesn't exist: grid-layout" fill the entire screen?** <br>
-You didn't install [layout card](https://my.home-assistant.io/redirect/hacs_repository/?owner=thomasloven&repository=lovelace-layout-card&category=plugin)!!! <br> I told you it was crucial  <img width="18" height="18" alt="Untitled 10 001" src="https://github.com/user-attachments/assets/8ffb71c4-af83-492c-a49d-438a0d3a2944" />
+You didn't install [layout card](https://my.home-assistant.io/redirect/hacs_repository/?owner=thomasloven&repository=lovelace-layout-card&category=plugin)!!! <br> I told you it was crucial...
 
 
 > I'll add to these if more repeated questions come up
