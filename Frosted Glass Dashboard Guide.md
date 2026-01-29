@@ -116,7 +116,7 @@ Take note of the names you choose for the sensors as you'll need them once you c
 #### File Editor Users:
 - Open the file editor add-on.
 - Choose "Browse Filesystem" in the top left.
-- Navigate to your "www" folder. In the folder, create a new folder and name it "weather_icons." The name must exactly match the name of the weather icons folder in the GitHub download, otherwise it won't work.
+- Navigate to your "www" folder. In the folder, create a new folder and name it "weather_icons". The name must exactly match the name of the weather icons folder in the GitHub download, otherwise it won't work.
 - Open the newly created folder.
 - At the top of the file browser, click the upload icon. Click the "File" button and navigate to the weather icons folder in the GitHub download on your computer.
 - Choose the first icon in the folder and upload it.
